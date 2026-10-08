@@ -21,7 +21,7 @@ def synonyms_from_NCBI(path_NCBIgeneinfo: str) -> Dict:
     
     # Parse the downloaded NCBI gene information:
     path_NCBIgeneinfo_cut = f"{path_NCBIgeneinfo}_cut"
-    command_parsing = "awk -F'\t' '{print $3 \"\t\" $5 \"\t\" $11}' " + path_NCBIgeneinfo + " | tr \| '\t' > " + path_NCBIgeneinfo_cut + " ; sed -i 1d " + path_NCBIgeneinfo_cut
+    command_parsing = r"awk -F'\t' '{print $3 \"\t\" $5 \"\t\" $11}' " + path_NCBIgeneinfo + r" | tr \| '\t' > " + path_NCBIgeneinfo_cut + r" ; sed -i 1d " + path_NCBIgeneinfo_cut
     os.system(command_parsing)
     
     # Extract gene information:    
@@ -42,9 +42,11 @@ def synonyms_from_NCBI(path_NCBIgeneinfo: str) -> Dict:
             reference_names.add(ncbi_reference_name)
 
             for gene in res:
+                print(gene)
                 if gene not in reference_names \
                 and gene not in gene_synonyms_dict: # Warning with NCBI list of synonyms: a noun can be the synonym of several reference names. Arbitrary, the choosen one is the first.
                     gene_synonyms_dict[gene] = ncbi_reference_name
+                    print("bad", gene)
                     
     os.system(f"rm {path_NCBIgeneinfo_cut}")
     return gene_synonyms_dict
