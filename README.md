@@ -17,9 +17,11 @@ TBD
 - Filter out genes based on ??
 - Conserve only the most highly variable genes
 
-### Step 1 - Binarization with PROFILE
+### Step 1 - Computing clusters with STREAM
+STREAM is used to build gene clusters and track the trajectory of cell fates.
 
-### Step 2 - Computing clusters with STREAM
+### Step 2 - Binarization with PROFILE
+From the full scRNA-seq dataset, PROFILE was used to classify in each cell each gene as either 0, 1, or undetermined, by comparing its expression to the distribution in all cells. Genes are are then binarized depending on majority rule, by STREAM cluster group. 
 
 ### Step 3 - Generating boolean network with bonesis
 
