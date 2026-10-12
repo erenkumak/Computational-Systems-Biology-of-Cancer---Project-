@@ -1,0 +1,676 @@
+---
+title: "Binarize"
+output: html_document
+date: "2026-10-08"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r packages_and_utilities, echo=FALSE, message=FALSE}
+
+if (!require("pacman")) install.packages("pacman")
+list.of.packages <- c("tidyverse","VennDiagram","networkD3","knitr","gridExtra","mclust","diptest","moments","magrittr")
+pacman::p_load(list.of.packages, character.only = TRUE)
+
+tbl_to_df <- function(x){
+  x <- x %>% as.data.frame %>%  remove_rownames %>% column_to_rownames(var="PATIENT_ID")
+} 
+rename <- dplyr::rename
+select <- dplyr::select
+
+library(data.table)
+```
+
+```{r}
+# Load gene x cell normalized expression matrix
+
+Chevalier_raw_data <- fread("nestorowa_singlecell_raw_data_taken_from_bonesis_paper.tsv",data.table = FALSE)
+colnames(Chevalier_raw_data)[1] <- 'Gene'
+
+rownames(Chevalier_raw_data) <- Chevalier_raw_data[[1]]
+
+#Chevalier_raw_data <- Chevalier_raw_data[, -1,drop = FALSE]
+
+dim(Chevalier_raw_data)
+
+head(rownames(Chevalier_raw_data))
+head(colnames(Chevalier_raw_data))
+
+RNA_cells <- as.data.frame(
+  t(Chevalier_raw_data),
+  check.names = FALSE
+)
+RNA_cells <- rownames_to_column(
+  RNA_cells,
+  var = "PATIENT_ID"
+)
+RNA_cells <- RNA_cells[-1,]
+RNA_cells[-1] <- lapply(
+  RNA_cells[-1],
+  function(x) as.numeric(trimws(x))
+)
+dim(RNA_cells)
+head(RNA_cells[, 1:5])
+
+
+stopifnot(
+  !anyDuplicated(RNA_cells$PATIENT_ID),
+  !anyDuplicated(colnames(RNA_cells)),
+  all(sapply(RNA_cells[, -1, drop = FALSE], is.numeric))
+)
+```
+
+
+## RNA profiles
+
+RNA data is intrinsically continuous and therefore require preliminary data processing. It is important to notice that METABRIC data comes from microarray.
+
+### Binarization with classification tree
+
+```{r binarization_normalization_utilities, echo=FALSE, message=FALSE, warning=FALSE}
+#function to compute the Bimodality Index (BI) described in Wang et al. (2009)
+BI <- function(dataset) {
+  x <- dataset
+    mc <- Mclust(na.omit(x), G = 2, modelNames = "E", verbose = FALSE)
+    if (is.null(mc)) {
+      bi <- NA
+    } else {
+      sigma <- sqrt(mc$parameters$variance$sigmasq)
+      delta <- abs(diff(mc$parameters$mean))/sigma
+      pi <- mc$parameters$pro[1]
+      bi <- delta * sqrt(pi*(1-pi))
+    }
+  bi
+}
+
+#function to binarize the tails of the distribution, based on inter-quartile range (IQR), similar to methods described in teh outlier-sum statistic (Tibshirani and Hastie, 2007). Can be called with a reference dataset
+OSclass <- function(exp_dataset, ref_dataset=exp_dataset) {
+  classif <-rep(NA,length(exp_dataset))
+  q25 <- quantile(ref_dataset,0.25, na.rm = T)
+  q75 <- quantile(ref_dataset,0.75, na.rm = T)
+  IQR <- q75 - q25 #InterQuartile Range
+  classif[exp_dataset>IQR+q75] <- 1
+  classif[exp_dataset<q25-IQR] <- 0
+  return(classif)
+}
+
+#function to to binarize bimodal distributions based on a 2-modes gaussian mixture model (with equal variances). Can be called with a reference dataset
+BIMclass <- function(exp_dataset, ref_dataset=exp_dataset) {
+  mc <- Mclust(na.omit(ref_dataset), modelNames = "E", G=2, verbose = FALSE)
+  classif <- rep(NA,length(exp_dataset))
+  if (diff(mc$parameters$mean)>0){
+    thresh_down <- max(mc$data[mc$classification==1 & mc$uncertainty <= 0.05])
+    thresh_up <- min(mc$data[mc$classification==2 & mc$uncertainty <= 0.05])
+    classif[exp_dataset<=thresh_down] <- 0
+    classif[exp_dataset>=thresh_up] <- 1
+  } else if (diff(mc$parameters$mean)<0){
+    thresh_down <- max(mc$data[mc$classification==2 & mc$uncertainty <= 0.05])
+    thresh_up <- min(mc$data[mc$classification==1 & mc$uncertainty <= 0.05])
+    classif[exp_dataset<=thresh_down] <- 0
+    classif[exp_dataset>=thresh_up] <- 1
+  }
+  return(classif)
+}
+
+#function for normalization of zero-inflated data
+norm_fun_lin <- function(xdat, reference = xdat){
+  x_proc <- (xdat-quantile(reference, 0.01, na.rm = T))/quantile(xdat-quantile(reference, 0.01, na.rm = T), 0.99, na.rm = T)
+  x_proc[x_proc<0] <- 0
+  x_proc[x_proc>1] <- 1
+  x_proc
+}
+
+#function for normalization of unimodal data
+norm_fun_sig <- function(xdat, reference = xdat){
+  xdat <- xdat - median(reference, na.rm = T)
+  lambda <- log(3)/mad(reference, na.rm = T)
+  transformation <- function(x){
+    y <- 1/(1+exp(-lambda*x))
+    y
+  }
+  transformation(xdat) 
+}
+
+#function for normalization of unimodal data
+norm_fun_bim <- function(xdat, reference = xdat) {
+  not_na_xdat <- !is.na(xdat)
+  not_na_ref <- !is.na(reference)
+  mc <- Mclust(reference[not_na_ref], modelNames = "E", G=2, verbose = FALSE)
+  pred <- predict.Mclust(mc,xdat[not_na_xdat])
+  normalization <- rep(NA,length(xdat))
+  if (diff(mc$parameters$mean)>0){
+    normalization[not_na_xdat] <- pred$z[,2]
+  } else if (diff(mc$parameters$mean)<0){
+    normalization[not_na_xdat] <- pred$z[,1]
+  }
+  normalization
+}
+```
+
+```{r RNA_profiles_original_criteria, echo=FALSE, message=FALSE, warning=FALSE, eval=TRUE}
+
+#Here we compute all statistical tools and criteria needed to perform the classification of distributions in the following categories: discarded, zero-inflated, unimodal and bimodal
+compute_criteria <- function(exp_dataset){
+  exp_dataset <- exp_dataset %>% select(-PATIENT_ID)
+  criteria <- tibble(Gene=colnames(exp_dataset), Dip=NA, BI=NA, Kurtosis=NA, DropOutRate=NA, MeanNZ=NA, DenPeak=NA, Amplitude=NA)
+  
+  #Compute
+  pb = txtProgressBar(min = 1, max = ncol(exp_dataset), initial = 1) 
+  for (i in 1:ncol(exp_dataset)){
+    x <- na.omit(unlist(exp_dataset[,i]))
+    criteria$Amplitude[i] <- max(x)-min(x)
+    
+    if (criteria$Amplitude[i] !=0){
+      criteria$Dip[i] <- dip.test(x)$p.value
+      criteria$BI[i] <- BI(x)
+      criteria$Kurtosis[i] <- kurtosis(x)-3
+      criteria$DropOutRate[i] <- sum(x==0)/length(x)
+      criteria$MeanNZ[i] <- sum(x)/sum(x!=0)
+      den <- density(x, na.rm = T)
+      criteria$DenPeak[i] <- den$x[which.max(den$y)]
+    }
+    
+    setTxtProgressBar(pb,i)
+  }
+  
+  threshold <- median(criteria$Amplitude)/10
+  criteria <- criteria %>% 
+    mutate(Category=ifelse(Amplitude<threshold | DropOutRate>0.95, "Discarded", NA)) %>%
+    mutate(Category=ifelse(is.na(Category) & (BI>1.5 & Dip<0.05 & Kurtosis < 1),"Bimodal",Category)) %>%
+    mutate(Category=ifelse(is.na(Category) & DenPeak<threshold, "ZeroInf", Category)) %>%
+    mutate(Category=ifelse(is.na(Category), "Unimodal", Category))
+  
+  return(criteria)
+}
+
+criteria_cells <- compute_criteria(RNA_cells)
+
+head(criteria_cells)
+
+table(criteria_cells$Category)
+```
+
+And depending on distribution category, we can perform binarization
+
+```{r RNA_profiles_original_profiles, echo=FALSE, message=FALSE, warning=FALSE}
+#function to apply the proper binarization method depending on the gene expression distribution category
+binarize_exp <-  function(exp_dataset, ref_dataset, ref_criteria, gene, show.plot=F){
+  if(!missing(gene)){
+    
+    gene_cat <- ref_criteria %>% filter(Gene==gene) %>% select(Category) %>% unlist
+    x <- unlist(select(exp_dataset,gene))
+    x_ref <- unlist(select(ref_dataset,gene))
+    
+    if (gene_cat=="Discarded"){
+        stop("Discarded gene")
+      
+      } else if (gene_cat=="Bimodal"){
+        gene_bin <- BIMclass(x,x_ref)
+        
+      } else {
+        gene_bin <- OSclass(x,x_ref)
+      }
+    names(gene_bin) <- exp_dataset$PATIENT_ID
+    if(show.plot==T){
+      if(all(is.na(gene_bin))){
+        tibble(Continuous=x) %>% ggplot(aes(x=Continuous))+geom_histogram(bins=30)+ggtitle(gene)
+      } else {
+        tibble(Continuous=x, Discrete=factor(gene_bin)) %>% ggplot(aes(x=Continuous, fill=Discrete))+geom_histogram(bins=30)+ggtitle(gene)
+      }
+    } else {
+      return(gene_bin)
+    }
+    
+  } else {
+    exp_dataset <- tbl_to_df(exp_dataset) 
+    ref_dataset <- tbl_to_df(ref_dataset)
+    if(dim(exp_dataset)[2] != dim(ref_criteria)[1]){stop("Different number of genes")}
+    logi_dis <- ref_criteria$Category=="Discarded"
+    logi_OS <- ref_criteria$Category=="Unimodal" | ref_criteria$Category=="ZeroInf"
+    logi_bim <- ref_criteria$Category=="Bimodal"
+    exp_dataset[,logi_dis] <- lapply(exp_dataset[,logi_dis], function(x) rep(NA, length(x)))
+    exp_dataset[,logi_OS] <- mapply(function(x,y) OSclass(x,y), as.data.frame(exp_dataset[,logi_OS]), as.data.frame(ref_dataset[,logi_OS]))
+    exp_dataset[,logi_bim] <- mapply(function(x,y) BIMclass(x,y), as.data.frame(exp_dataset[,logi_bim]), as.data.frame(ref_dataset[,logi_bim]))
+    
+    return(exp_dataset)
+  }
+  
+}
+
+RNA_cells_prof <- binarize_exp(
+  RNA_cells,
+  RNA_cells,
+  criteria_cells
+)
+
+dim(RNA_cells_prof)
+
+head(RNA_cells_prof[, 1:5])
+
+binary_gene_cell <- t(
+  as.matrix(RNA_cells_prof)
+)
+
+dim(binary_gene_cell)
+
+binary_gene_cell[1:10, 1:10]
+
+# Total number of 0, 1 and NA values
+
+table(
+  binary_gene_cell,
+  useNA = "always"
+)
+
+# Proportion of determined entries
+
+mean(!is.na(binary_gene_cell))
+
+# Number of determined cells per gene
+
+summary(
+  rowSums(!is.na(binary_gene_cell))
+)
+
+# Number of determined genes per cell
+
+summary(
+  colSums(!is.na(binary_gene_cell))
+)
+
+stopifnot(
+  identical(
+    colnames(binary_gene_cell),
+    RNA_cells$PATIENT_ID
+  ),
+  identical(
+    rownames(binary_gene_cell),
+    criteria_cells$Gene
+  )
+)
+```
+```{r}
+library(dplyr)
+
+trajectory <- read.csv(
+  "all_cells_distances_long.csv"
+)
+
+# Choose the number of closest cells per state
+n_cells <- 50
+
+selected_cells <- trajectory %>%
+  group_by(state) %>%
+  slice_min(
+    distance_along_tree,
+    n = n_cells,
+    with_ties = FALSE
+  ) %>%
+  ungroup()
+```
+
+```{r}
+# States from STREAM
+states <- sort(unique(selected_cells$state))
+
+# Empty state x gene matrix
+state_binary <- matrix(
+  NA_integer_,
+  nrow = length(states),
+  ncol = nrow(binary_gene_cell),
+  dimnames = list(
+    states,
+    rownames(binary_gene_cell)
+  )
+)
+
+for (s in states) {
+
+  # Cells selected for this state
+  cells <- selected_cells$cell_id[
+    selected_cells$state == s
+  ]
+
+  # Genes x selected cells
+  sub <- binary_gene_cell[
+    ,
+    cells,
+    drop = FALSE
+  ]
+
+  # Count 0, 1, and ND for every gene
+  n0 <- rowSums(sub == 0, na.rm = TRUE)
+  n1 <- rowSums(sub == 1, na.rm = TRUE)
+  nND <- rowSums(is.na(sub))
+
+  # Strictly most frequent value wins
+  result <- rep(NA_integer_, nrow(sub))
+
+  result[n0 > n1 & n0 > nND] <- 0L
+  result[n1 > n0 & n1 > nND] <- 1L
+
+  # ND wins or ties remain NA
+  state_binary[s, ] <- result
+}
+
+# Final matrix
+dim(state_binary)
+
+state_binary[, 1:10]
+```
+```{r}
+paper_data <- fread(
+  "C:/Users/eren/Desktop/hematopoiesis/data/nestorowa_singlecell_binarized_observations.csv",
+  data.table = FALSE,
+  check.names = FALSE
+)
+
+rownames(paper_data) <- as.character(paper_data$V1)
+paper_data$V1 <- NULL
+
+# Ensure state_binary is a matrix
+state_binary <- as.matrix(state_binary)
+
+# Check BEFORE subsetting
+rownames(paper_data)
+rownames(state_binary)
+```
+
+```{r}
+convert_binary <- function(x) {
+
+  x <- as.matrix(x)
+
+  values <- trimws(as.character(x))
+
+  values[toupper(values) %in% c("ND", "NA", "NAN", "")] <- NA
+
+  numeric_values <- suppressWarnings(as.numeric(values))
+
+  invalid <- !is.na(values) &
+    (is.na(numeric_values) | !(numeric_values %in% c(0, 1)))
+
+  if (any(invalid)) {
+    stop(
+      "Unexpected values: ",
+      paste(unique(values[invalid]), collapse = ", ")
+    )
+  }
+
+  matrix(
+    as.integer(numeric_values),
+    nrow = nrow(x),
+    ncol = ncol(x),
+    dimnames = dimnames(x)
+  )
+}
+
+paper_data <- convert_binary(paper_data)
+state_binary <- convert_binary(state_binary)
+```
+
+```{r}
+# Check differences before matching
+
+setdiff(rownames(paper_data), rownames(state_binary))
+setdiff(colnames(paper_data), colnames(state_binary))
+
+# Find shared states and genes
+
+common_states <- intersect(
+  rownames(paper_data),
+  rownames(state_binary)
+)
+
+common_genes <- intersect(
+  colnames(paper_data),
+  colnames(state_binary)
+)
+
+cat("Shared states:", length(common_states), "\n")
+cat("Shared genes:", length(common_genes), "\n")
+
+# Match both matrices
+
+paper <- paper_data[
+  common_states,
+  common_genes,
+  drop = FALSE
+]
+
+ours <- state_binary[
+  common_states,
+  common_genes,
+  drop = FALSE
+]
+
+stopifnot(
+  identical(dimnames(paper), dimnames(ours)),
+  length(common_states) == 6,
+  length(common_genes) > 0
+)
+```
+```{r}
+# Original paper
+table(paper, useNA = "always")
+prop.table(table(paper, useNA = "always"))
+
+# Your reconstruction
+table(ours, useNA = "always")
+prop.table(table(ours, useNA = "always"))
+```
+```{r}
+distribution_comparison <- data.frame(
+  Classification = c("0", "1", "ND"),
+  Paper = c(
+    sum(paper == 0, na.rm = TRUE),
+    sum(paper == 1, na.rm = TRUE),
+    sum(is.na(paper))
+  ),
+  Ours = c(
+    sum(ours == 0, na.rm = TRUE),
+    sum(ours == 1, na.rm = TRUE),
+    sum(is.na(ours))
+  )
+)
+
+distribution_comparison
+```
+```{r}
+paper_values <- factor(
+  ifelse(is.na(paper), "ND", as.character(paper)),
+  levels = c("0", "1", "ND")
+)
+
+our_values <- factor(
+  ifelse(is.na(ours), "ND", as.character(ours)),
+  levels = c("0", "1", "ND")
+)
+
+confusion <- table(
+  Paper = paper_values,
+  Ours = our_values
+)
+
+confusion
+```
+```{r}
+ggplot(
+  as.data.frame(confusion),
+  aes(x = Paper, y = Ours, fill = Freq)
+) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = Freq), size = 5) +
+  scale_fill_gradient(low = "white", high = "steelblue") +
+  theme_minimal() +
+  labs(
+    title = "Chevalier vs Reconstructed Boolean States",
+    fill = "Number of observations"
+  )
+```
+```{r}
+# Three-state percentage agreement
+overall_agreement <- sum(diag(confusion)) / sum(confusion)
+
+# Cohen's kappa including ND
+observed <- overall_agreement
+
+expected <- sum(
+  rowSums(confusion) * colSums(confusion)
+) / sum(confusion)^2
+
+kappa_3state <- if (expected < 1) {
+  (observed - expected) / (1 - expected)
+} else {
+  NA_real_
+}
+
+# Compare only observations determined by both methods
+both_determined <- !is.na(paper) & !is.na(ours)
+
+binary_agreement <- if (any(both_determined)) {
+  mean(paper[both_determined] == ours[both_determined])
+} else {
+  NA_real_
+}
+
+# Coverage of both methods
+paper_coverage <- mean(!is.na(paper))
+our_coverage <- mean(!is.na(ours))
+
+data.frame(
+  Metric = c(
+    "Three-state agreement",
+    "Three-state Cohen's kappa",
+    "Binary agreement (both determined)",
+    "Paper determined proportion",
+    "Our determined proportion"
+  ),
+  Value = c(
+    overall_agreement,
+    kappa_3state,
+    binary_agreement,
+    paper_coverage,
+    our_coverage
+  )
+)
+```
+```{r}
+# Equality matrix, treating two ND values as equal
+same <- matrix(
+  FALSE,
+  nrow = nrow(paper),
+  ncol = ncol(paper),
+  dimnames = dimnames(paper)
+)
+
+same[is.na(paper) & is.na(ours)] <- TRUE
+
+both <- !is.na(paper) & !is.na(ours)
+
+same[both] <- paper[both] == ours[both]
+
+state_comparison <- data.frame(
+  State = rownames(paper),
+
+  Agreement = rowMeans(same),
+
+  Paper_Determined = rowSums(!is.na(paper)),
+
+  Our_Determined = rowSums(!is.na(ours)),
+
+  Shared_Determined = rowSums(both),
+
+  Different = rowSums(!same)
+)
+
+state_comparison
+```
+```{r}
+ggplot(
+  state_comparison,
+  aes(x = State, y = Agreement)
+) +
+  geom_col(fill = "steelblue") +
+  coord_cartesian(ylim = c(0, 1)) +
+  theme_minimal() +
+  labs(
+    title = "Agreement by STREAM State",
+    y = "Proportion of matching classifications",
+    x = "STREAM State"
+  )
+```
+
+
+
+```{r}
+gene_comparison <- data.frame(
+  Gene = colnames(paper),
+
+  Matching_States = colSums(same),
+
+  Agreement = colMeans(same),
+
+  Exact_Match = colSums(same) == nrow(paper),
+
+  Paper_Determined = colSums(!is.na(paper)),
+
+  Our_Determined = colSums(!is.na(ours))
+)
+
+# Number of genes with identical six-state profiles
+sum(gene_comparison$Exact_Match)
+
+# Percentage of genes perfectly replicated
+mean(gene_comparison$Exact_Match)
+
+# Gene-level summary
+summary(gene_comparison$Agreement)
+```
+```{r}
+gene_comparison %>%
+  arrange(Agreement) %>%
+  head(20)
+```
+```{r}
+set.seed(123)
+
+boot_agreement <- replicate(1000, {
+
+  sampled <- sample(
+    seq_len(ncol(paper)),
+    replace = TRUE
+  )
+
+  p <- paper[, sampled, drop = FALSE]
+  o <- ours[, sampled, drop = FALSE]
+
+  valid <- !is.na(p) & !is.na(o)
+
+  if (!any(valid)) {
+    NA_real_
+  } else {
+    mean(p[valid] == o[valid])
+  }
+})
+
+quantile(
+  boot_agreement,
+  c(0.025, 0.5, 0.975),
+  na.rm = TRUE
+)
+```
+
+
+
+
+
+
+
+
+
+
+
