@@ -14,8 +14,7 @@ Starting from the raw data of Nestorowa's article, performing quality controls (
 
 TBD
 - Normalize the expression matrix
-- Filter out genes based on ??
-- Conserve only the most highly variable genes
+- Feature selection: conserve only the most highly variable genes
 
 ### Step 1 - Computing clusters with STREAM
 STREAM is used to build gene clusters and track the trajectory of cell fates.
