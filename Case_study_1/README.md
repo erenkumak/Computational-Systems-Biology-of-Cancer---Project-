@@ -19,7 +19,7 @@ This case study is a reproduction of the case study 1 of the Chevalier et al pap
 - **Environment**: yml files for building corresct conda environments with adapted dependencies for STREAM and binarization
 - **Results**: outputs for each script (listed in their respective folder per jupyter notebook)
 
-##References for data abnd methods: 
+## References for data abnd methods: 
 
 Main paper: Chevalier, S., Becker, J., Gui, Y. et al. Data-driven inference of Boolean networks from transcriptomes to predict cellular differentiation and reprogramming. npj Syst Biol Appl 11, 105 (2025). https://doi.org/10.1038/s41540-025-00569-z
 
