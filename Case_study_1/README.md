@@ -1,34 +1,72 @@
-# Case Study 1: hematopoiesis
+# Case Study 1: Hematopoiesis
 
-This case study is a reproduction of the case study 1 of the Chevalier et al paper "Data-driven inference of Boolean networks from transcriptomes to predict cellular differentiation and reprogramming". Our goal was to reproduce the paper results and build a comprehensive github interface from which the full analysis pipeline can be conducted on any new dataset. We therefore used the existing jupyter notebooks from the zenodo repository from the paper (https://doi.org/10.5281/zenodo.16990770) where we could, and built the missing jupyter notebooks using the methodology papers cited or by following the method as closely as possible. 
+## Overview
 
-## Organization of the case 1 folder
--  **Data**: used to store input data extracted directly from the Chevalier et al paper, which sources from Nestorowa et al dataset on hematopoiesis.
-  - **Models**: stores models built from BoNesis   
-- **Code** : Stores jupyter notebooks for each step in the case 1 pipeline and their order.
-  - Data_treatment_QC.ipynb
-  - Data_treatment_normalization.ipynb
-  - STREAM.ipynb
-  - Binarization.Rmd
-  - Component_selection.ipynb
-  - Component_analysis.ipynb
-  - Boolean_network_sampling.ipynb
-  - Ensemble_analysis.ipynb
-  - Ensemble_analysis_clustered.ipynb
-  - Ensemble_analysis_interactiongraph.ipynb
-- **Environment**: yml files for building corresct conda environments with adapted dependencies for STREAM and binarization
-- **Results**: outputs for each script (listed in their respective folder per jupyter notebook)
+This repository reproduces **Case Study 1: Hematopoiesis** from Chevalier et al. (2025).
 
-## References for data abnd methods: 
+The original code and data are available on [Zenodo](https://doi.org/10.5281/zenodo.16990770). Missing notebooks were implemented based on the methodology described in the associated publications.
 
-Main paper: Chevalier, S., Becker, J., Gui, Y. et al. Data-driven inference of Boolean networks from transcriptomes to predict cellular differentiation and reprogramming. npj Syst Biol Appl 11, 105 (2025). https://doi.org/10.1038/s41540-025-00569-z
+## Repository Structure
 
-STREAM (building trajectories): Chen, H. et al. Single-cell trajectories reconstruction, exploration and mapping of omics data with stream. Nat. Commun. 10, 1903 (2019)
+```text
+.
+├── Data/
+│   └── Input data from Chevalier et al., derived from the Nestorowa et al. hematopoiesis dataset
+├── Models/
+│   └── Boolean network models generated using BoNesis
+├── Code/
+│   ├── Data_treatment_QC.ipynb
+│   ├── Data_treatment_normalization.ipynb
+│   ├── STREAM.ipynb
+│   ├── Binarization.Rmd
+│   ├── Component_selection.ipynb
+│   ├── Component_analysis.ipynb
+│   ├── Boolean_network_sampling.ipynb
+│   ├── Ensemble_analysis.ipynb
+│   ├── Ensemble_analysis_clustered.ipynb
+│   └── Ensemble_analysis_interactiongraph.ipynb
+├── Environment/
+│   └── Conda environment files for STREAM and binarization
+└── Results/
+    └── Outputs generated at each step of the analysis
+```
 
-PROFILE (binarizing scRNA-seq data): Béal, J., Montagud, A., Traynard, P., Barillot, E. & Calzone, L. Personalization of logical models with multi-omics data allows clinical stratification of patients. Front. Physiol. 9, 1965 (2019).
+## Analysis Workflow
 
-Nestorowa dataset used in case 1: Nestorowa, S. et al. A single-cell resolution map of mouse hematopoietic stem and progenitor cell differentiation. Blood 128, e20–e31 (2016).
+The analysis is organized into the following steps:
 
-DoRothEA database (for building gene networks): Holland, C. H., Szalai, B. & Saez-Rodriguez, J. Transfer of regulatory knowledge from human to mouse for functional genomics analysis. Biochim. Biophys. Acta 1863, 194431 (2020). Transcriptional Profiles and Regulatory Gene Networks.
+1. **Data quality control** — assess the quality of the input data.
+2. **Data normalization** — normalize the data for downstream analysis.
+3. **Trajectory inference** — reconstruct cellular trajectories using STREAM.
+4. **Binarization** — convert gene expression data into binary observations.
+5. **Component selection** — identify the components used for Boolean network inference.
+6. **Component analysis** — characterize the selected components.
+7. **Boolean network sampling** — generate Boolean network models using BoNesis.
+8. **Ensemble analysis** — analyze the inferred network ensemble, including clustered and interaction-graph analyses.
 
-BoNesis: Chevalier, S., Boyenval, D., Magaña-López, G., Roncalli, T., Vaginay, A. & Paulevé, L. BoNesis: a Python-Based Declarative Environment for the Verification, Reprogramming, and Synthesis of Most Permissive Boolean Networks, pp 71–79. (Springer Nature Switzerland, 2024) https://doi.org/10.1007/978-3-031-71671-3_6.
+The corresponding notebooks and scripts are located in the `Code/` directory. Intermediate and final outputs are stored in `Results/`.
+
+## Environment Setup
+
+Conda environment configuration files are provided in the `Environment/` directory.
+
+To create an environment from a YAML file, run:
+
+```bash
+conda env create -f Environment/<environment_file>.yml
+```
+
+Replace `<environment_file>.yml` with the name of the relevant environment file.
+
+## References
+
+* Chevalier, S. et al. (2025). *[Article in npj Systems Biology and Applications](https://doi.org/10.1038/s41540-025-00569-z)*, **11**, 105.
+* Chen, H. et al. (2019). STREAM: Single-cell Trajectories Reconstruction, Exploration And Mapping of omics data. *Nature Communications*, **10**, 1903.
+* Béal, J. et al. (2019). *[An approach for the inference of Boolean networks from gene expression data](https://doi.org/10.3389/fphys.2018.01965)*. *Frontiers in Physiology*, **9**, 1965.
+* Nestorowa, S. et al. (2016). A single-cell resolution map of mouse hematopoietic stem and progenitor cell differentiation. *Blood*, **128**, e20–e31.
+* Holland, C. H. et al. (2020). DoRothEA: a resource for the inference of transcription factor activities. *Biochimica et Biophysica Acta (BBA) – Gene Regulatory Mechanisms*, **1863**, 194431.
+* Chevalier, S. et al. (2024). BoNesis: Boolean Network Inference from Constraints. *Publication details to be confirmed*.
+
+## Acknowledgments
+
+This work builds on the datasets, methods, and software developed by the authors cited above.
