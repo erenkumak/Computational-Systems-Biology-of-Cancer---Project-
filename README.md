@@ -24,3 +24,10 @@ From the full scRNA-seq dataset, PROFILE was used to classify in each cell each 
 
 ### Step 3 - Generating boolean network with bonesis
 
+## Applications to a different dataset
+Data obtained from the following paper: https://explore.data.humancellatlas.org/projects/c1810dbc-16d2-45c3-b45e-3e675f88d87b
+Data file obtained from its repository: https://zenodo.org/records/3572422
+
+We chose to focus on T-cell differenciation trajectory by looking at the human T-cell data, thymus_annotated_matrix_files/HTA08.v01.A06.Science_human_tcells.h5ad. The paper lists expected cell fate trajectories from biological data, which we used to corroborate our STREAM-generated trajectories. 
+
+To find the notebooks for this analysis, explore folder 
