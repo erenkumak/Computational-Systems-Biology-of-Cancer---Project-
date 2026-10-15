@@ -1,0 +1,5 @@
+selection,n_genes,n_signed_edges
+Chevalier 39,39,137
+Our optimal Clingo answer,129,556
+Our nonconstant set,100,341
+Our largest SCC,39,157

@@ -1,0 +1,13 @@
+gene,distinct_boolean_functions,constant_0_models,constant_1_models
+ATF7,1,0,0
+EBF1,1,0,0
+FOXO3,1,0,1000
+FOXP2,1,0,1000
+GATA1,1,0,0
+GFI1B,1,0,0
+KLF1,1,0,0
+NRF1,1,0,0
+RELA,1,0,0
+STAT6,1,0,0
+TBP,1,0,0
+ZEB2,1,0,0

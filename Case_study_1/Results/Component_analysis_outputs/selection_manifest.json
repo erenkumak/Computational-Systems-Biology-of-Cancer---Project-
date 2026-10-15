@@ -1,0 +1,20 @@
+{
+  "selection": "final_proven_optimum",
+  "clingo_answer_id": 195,
+  "clingo_optimum_proven": true,
+  "clingo_objective": {
+    "n_selected": 129,
+    "n_strong_constants": 29
+  },
+  "log_path": "../Results/Component_selection_outputs/clingo_optimization.log",
+  "log_sha256": "b48c79399b3a96d77bb8ca185cb111fc5045abb01b1af751209ae4e7b55003e9",
+  "candidate_sif_path": "../Results/Component_selection_outputs/hematopoiesis_seed_network.sif",
+  "candidate_sif_sha256": "daf0926a10b8163763da0deb938d3752e6c110cf0af741b7debfc1a8b2837206",
+  "n_selected": 129,
+  "n_strong_constants": 29,
+  "n_nonconstant": 100,
+  "n_core_genes": 39,
+  "n_core_signed_edges": 157,
+  "core_sif_sha256": "230691b342d968598fc87be35a943e515c5506c16513770c926e4ca2c0cfdf9b",
+  "scc_dynamical_compatibility_checked": false
+}

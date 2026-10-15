@@ -1,0 +1,210 @@
+// Number of models containing each regulatory influence
+digraph models_per_edge {
+	graph [ratio=1.1]
+	ATF3 [label="ATF3
+3 func" fillcolor=cornsilk fontcolor=black fontname="arial bold" fontsize="35pt" shape=box style="rounded,filled"]
+	ATF7 [label="ATF7
+1 func" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	CEBPA [label="CEBPA
+3 func" fillcolor=cornsilk fontcolor=black fontname="arial bold" fontsize="35pt" shape=box style="rounded,filled"]
+	CREM [label="CREM
+4 func
+0: 5" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled"]
+	E2F1 [label="E2F1
+3 func" fillcolor=cornsilk fontcolor=black fontname="arial bold" fontsize="35pt" shape=box style="rounded,filled"]
+	EBF1 [label="EBF1
+1 func" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	ESR1 [label="ESR1
+2 func" fillcolor=lightgoldenrod1 fontcolor=black fontname="arial bold" fontsize="40pt" shape=box style="rounded,filled"]
+	FLI1 [label="FLI1
+3 func" fillcolor=cornsilk fontcolor=black fontname="arial bold" fontsize="35pt" shape=box style="rounded,filled"]
+	FOS [label="FOS
+682 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled,dotted"]
+	FOXO3 [label="FOXO3
+1 func
+1: 1000" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	FOXP2 [label="FOXP2
+1 func
+1: 1000" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	GATA1 [label="GATA1
+1 func" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	GFI1B [label="GFI1B
+1 func" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	HBP1 [label="HBP1
+2 func" fillcolor=lightgoldenrod1 fontcolor=black fontname="arial bold" fontsize="40pt" shape=box style="rounded,filled"]
+	HNF4A [label="HNF4A
+5 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled"]
+	IKZF1 [label="IKZF1
+2 func" fillcolor=lightgoldenrod1 fontcolor=black fontname="arial bold" fontsize="40pt" shape=box style="rounded,filled"]
+	IRF1 [label="IRF1
+5 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled"]
+	IRF2 [label="IRF2
+4 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled"]
+	JUN [label="JUN
+5 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled"]
+	JUNB [label="JUNB
+4 func
+1: 4" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled"]
+	KLF1 [label="KLF1
+1 func" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	KLF6 [label="KLF6
+2 func" fillcolor=lightgoldenrod1 fontcolor=black fontname="arial bold" fontsize="40pt" shape=box style="rounded,filled"]
+	MEF2C [label="MEF2C
+2 func" fillcolor=lightgoldenrod1 fontcolor=black fontname="arial bold" fontsize="40pt" shape=box style="rounded,filled"]
+	MYB [label="MYB
+5 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled"]
+	MYC [label="MYC
+16 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled,dotted"]
+	NFATC1 [label="NFATC1
+2 func" fillcolor=lightgoldenrod1 fontcolor=black fontname="arial bold" fontsize="40pt" shape=box style="rounded,filled"]
+	NRF1 [label="NRF1
+1 func" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	RELA [label="RELA
+1 func" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	RUNX1 [label="RUNX1
+6 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled"]
+	SP1 [label="SP1
+2 func" fillcolor=lightgoldenrod1 fontcolor=black fontname="arial bold" fontsize="40pt" shape=box style="rounded,filled"]
+	SPI1 [label="SPI1
+3 func" fillcolor=cornsilk fontcolor=black fontname="arial bold" fontsize="35pt" shape=box style="rounded,filled"]
+	STAT1 [label="STAT1
+4 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled"]
+	STAT3 [label="STAT3
+5 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled"]
+	STAT6 [label="STAT6
+1 func" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	TBP [label="TBP
+1 func" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	TBX21 [label="TBX21
+2 func" fillcolor=lightgoldenrod1 fontcolor=black fontname="arial bold" fontsize="40pt" shape=box style="rounded,filled"]
+	TCF12 [label="TCF12
+2 func" fillcolor=lightgoldenrod1 fontcolor=black fontname="arial bold" fontsize="40pt" shape=box style="rounded,filled"]
+	TRP53 [label="TRP53
+44 func" fillcolor=white fontcolor=black fontname="arial bold" fontsize="30pt" shape=box style="rounded,filled,dotted"]
+	ZEB2 [label="ZEB2
+1 func" fillcolor=darkgoldenrod2 fontcolor=black fontname="arial bold" fontsize="50pt" shape=box style="rounded,filled,bold"]
+	JUN -> ATF3 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	CREM -> ATF3 [label=889 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	KLF6 -> ATF3 [label=885 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	TRP53 -> ATF3 [label=885 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	MYC -> ATF7 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	HNF4A -> CEBPA [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	MYC -> CEBPA [label=995 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=8]
+	MYB -> CEBPA [label=110 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=4]
+	TRP53 -> E2F1 [label=1000 arrowhead=tee arrowsize=3 color=firebrick fontcolor=firebrick fontname="arial bold" fontsize="30pt" penwidth=13]
+	ESR1 -> E2F1 [label=112 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=4]
+	SP1 -> E2F1 [label=110 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=4]
+	MYC -> E2F1 [label=110 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=4]
+	TBX21 -> EBF1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	STAT1 -> ESR1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	STAT3 -> ESR1 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	FOXO3 -> ESR1 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	SP1 -> ESR1 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	TRP53 -> ESR1 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	EBF1 -> FLI1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	MEF2C -> FLI1 [label=942 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=7]
+	SPI1 -> FLI1 [label=890 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	JUN -> FOS [label=999 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT3 -> FOS [label=997 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT6 -> FOS [label=891 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	ESR1 -> FOS [label=970 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=7]
+	CREM -> FOS [label=995 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=8]
+	FLI1 -> FOS [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	SP1 -> FOS [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	TRP53 -> FOS [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT1 -> FOS [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	SPI1 -> FOS [label=961 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=7]
+	FLI1 -> GATA1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	GATA1 -> GFI1B [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	FOXO3 -> HBP1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	MYC -> HBP1 [label=110 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=4]
+	SP1 -> HNF4A [label=997 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	CEBPA -> HNF4A [label=998 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	TRP53 -> HNF4A [label=886 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=5]
+	TBX21 -> IKZF1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	ZEB2 -> IKZF1 [label=1 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=1]
+	STAT3 -> IRF1 [label=998 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	KLF6 -> IRF1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	RELA -> IRF1 [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT1 -> IRF1 [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT6 -> IRF1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	MYC -> IRF2 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	STAT1 -> IRF2 [label=997 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	IRF1 -> IRF2 [label=997 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	SP1 -> JUN [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	MEF2C -> JUN [label=998 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	E2F1 -> JUN [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	STAT1 -> JUN [label=998 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	ESR1 -> JUN [label=999 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	MYC -> JUN [label=110 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=4]
+	MYB -> KLF1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	TBP -> KLF6 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	JUNB -> KLF6 [label=3 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=2]
+	GFI1B -> MEF2C [label=1000 arrowhead=tee arrowsize=3 color=firebrick fontcolor=firebrick fontname="arial bold" fontsize="30pt" penwidth=13]
+	ZEB2 -> MEF2C [label=1000 arrowhead=tee arrowsize=3 color=firebrick fontcolor=firebrick fontname="arial bold" fontsize="30pt" penwidth=13]
+	NFATC1 -> MEF2C [label=41 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=3]
+	E2F1 -> MYB [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	JUN -> MYB [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	ESR1 -> MYB [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	SPI1 -> MYB [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	TBP -> MYC [label=997 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	TRP53 -> MYC [label=997 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT3 -> MYC [label=999 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	CEBPA -> MYC [label=997 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=8]
+	FOS -> MYC [label=997 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=8]
+	JUN -> MYC [label=998 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=8]
+	HNF4A -> MYC [label=997 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT1 -> MYC [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	E2F1 -> MYC [label=890 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	MYB -> MYC [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	RELA -> MYC [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	SP1 -> MYC [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	ESR1 -> MYC [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	CREM -> NFATC1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	MEF2C -> NFATC1 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	FOS -> NFATC1 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	ESR1 -> NRF1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	E2F1 -> RELA [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	ATF3 -> RUNX1 [label=1000 arrowhead=tee arrowsize=3 color=firebrick fontcolor=firebrick fontname="arial bold" fontsize="30pt" penwidth=13]
+	TBP -> RUNX1 [label=998 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	HBP1 -> RUNX1 [label=998 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	FOXP2 -> RUNX1 [label=889 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=5]
+	SPI1 -> RUNX1 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	CEBPA -> SP1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	ESR1 -> SP1 [label=885 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	RUNX1 -> SPI1 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	CEBPA -> SPI1 [label=3 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=2]
+	SP1 -> SPI1 [label=885 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	FOXP2 -> STAT1 [label=1000 arrowhead=tee arrowsize=3 color=firebrick fontcolor=firebrick fontname="arial bold" fontsize="30pt" penwidth=13]
+	TRP53 -> STAT1 [label=891 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	STAT3 -> STAT1 [label=57 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=3]
+	TRP53 -> STAT3 [label=1000 arrowhead=tee arrowsize=3 color=firebrick fontcolor=firebrick fontname="arial bold" fontsize="30pt" penwidth=13]
+	SPI1 -> STAT3 [label=999 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	ATF3 -> STAT3 [label=996 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT1 -> STAT3 [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	CEBPA -> STAT3 [label=886 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	MYC -> STAT6 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	HNF4A -> TBP [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	RELA -> TBX21 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	STAT1 -> TBX21 [label=885 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=5]
+	ATF7 -> TCF12 [label=906 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=6]
+	MYC -> TCF12 [label=94 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=4]
+	MYC -> TRP53 [label=997 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	SP1 -> TRP53 [label=998 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	IRF1 -> TRP53 [label=997 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	FOS -> TRP53 [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	JUN -> TRP53 [label=998 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=8]
+	RELA -> TRP53 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT3 -> TRP53 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	E2F1 -> TRP53 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT1 -> TRP53 [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	ESR1 -> TRP53 [label=974 arrowhead=tee arrowsize=3 color=lightcoral fontcolor=lightcoral fontname="arial bold" fontsize="30pt" penwidth=7]
+	IRF2 -> ZEB2 [label=1000 arrowhead=normal arrowsize=2 color=darkgreen fontcolor=darkgreen fontname="arial bold" fontsize="30pt" penwidth=13]
+	STAT3 -> JUNB [label=996 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT1 -> JUNB [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	ESR1 -> JUNB [label=110 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=4]
+	JUN -> CREM [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	STAT1 -> CREM [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	FOS -> CREM [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+	SP1 -> CREM [label=995 arrowhead=normal arrowsize=2 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname="arial bold" fontsize="30pt" penwidth=8]
+}
