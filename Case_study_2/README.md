@@ -85,6 +85,10 @@ In the Park et al paper, the authors found differences in T-cell populations acc
 # Our results: 
 The T-cell differentiation trajectories for 12PCW and 17PCW were obtained using the STREAM notebook. 
 
+![12PCW Trajectory ](Results/Results_trajectory_12PCW.jpeg)
+![17PCW Trajectory ](Results/Results_trajectory_17PCW.jpeg)
+
+
 
 ## References
 
