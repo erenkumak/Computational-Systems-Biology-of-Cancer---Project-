@@ -95,8 +95,15 @@ The T-cell differentiation trajectories for 12PCW and 17PCW were obtained using 
 17PCW:
 <img src="Results/Results_trajectory_17PCW.jpeg" alt="17PCW Trajectory" width="500">
 
-- 
+In both cases we would expect the end of the branches to be mature CD4+ or CD8+ cells, as they are the fully differentiated form of T-cell. This is the case in at least one of the branches for each PCW sample. Similarly, we do see a general pattern of DN cells being more clustered at earlier nodes of the trajectories. 
+- In 12PCW, we see clearly in the S6 and S4 branches that there is a DN -> CP -> Tαβ transition as expected from the biological tracing of T-cell differentiation.
+- In 17PCW, the S5 branch is very similar to the S6 branch in 12PCW marking a transition from DN -> CP -> Tαβ. The S4 17PCW branch is similar to the S4 12PCW branch, and both show a trajectory that goes through the expected stages all the way to the terminally differentiated CD4+ and CD8+ stages. 
 
+However the number of branches seems off in both cases: there are too many end nodes, which results in some of the leaf nodes being T-cells that are in early stages of differentiation. 
+- This is the case in 12PCW branch S1 and S7, which stagnate at DN and DP states terminally. Biologically this would indicate that these cells do not further differentiate. For 12PCW this could mean that there is a reservoir of not fully differentiated T-cells, which although possible is not clearly corroborated by Park et al.
+- Similary, in 17PCW branches ending in S1 and S2, the terminal state is a DP (Q) T-cell, which is not a terminally differentiated state.
+
+Therefore, although the methodology successfully recovers some of the expected T-cell differentiation trajectories, with differences across developmental stages that may highlight biologically meaningful variations warranting further investigation, some branching decisions made by the automated pipeline cannot be corroborated by the expected biological differentiation trajectories. These discrepancies may indicate inaccuracies in trajectory reconstruction and require further analysis. In particular, it remains to be determined whether the apparent persistence of DN T cells reflects a genuine stable cellular state or, more likely, whether the pipeline generates an excessive number of nodes, leading to an inaccurate mapping of the differentiation trajectories.
 
 ## References
 
