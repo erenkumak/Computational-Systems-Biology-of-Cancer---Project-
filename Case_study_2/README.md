@@ -74,6 +74,18 @@ conda activate <environment_name>
 
 Refer to the environment configuration files and the corresponding notebooks for any additional dependencies or execution requirements.
 
+## Analysis of results: comparing trajectories in samples from 7 post-conception weeks (PCW) vs 12 PCW:
+
+# Paper results
+In the Park et al paper, the authors found differences in T-cell populations according to the development stage of the organism. 
+- At 7 PCW, the lymphoid compartment contained NK cells, γδ T cells, and ILC3s, with very few differentiating αβT cells, with differentiating T cells mostly found at DN stage
+- At 12 weeks, the DN cells progressed to SP (single-positive) stage and found an equilibrium in that state
+- Past 12 PCW, the paper found an increase in terminally differentiated CD4+ and CD8+ cells
+
+# Our results: 
+The T-cell differentiation trajectories for 12PCW and 17PCW were obtained using the STREAM notebook. 
+
+
 ## References
 
 * Chevalier, S. et al. (2025). *Article in npj Systems Biology and Applications*, **11**, 105. https://doi.org/10.1038/s41540-025-00569-z
