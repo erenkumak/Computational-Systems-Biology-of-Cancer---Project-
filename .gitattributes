@@ -1,1 +1,6 @@
 Case_study_1/Results/STREAM_outputs/stream_result.pkl filter=lfs diff=lfs merge=lfs -text
+Case_study_2/Data/HTA08.v01.A06.Science_human_tcells.h5ad filter=lfs diff=lfs merge=lfs -text
+Case_study_2/Results/Binarization_outputs/12w/cell_binarization.csv filter=lfs diff=lfs merge=lfs -text
+Case_study_2/Results/Binarization_outputs/17w/cell_binarization.csv filter=lfs diff=lfs merge=lfs -text
+Case_study_2/Results/Data_prep_outputs/12w_expression.tsv.gz filter=lfs diff=lfs merge=lfs -text
+Case_study_2/Results/Data_prep_outputs/17w_expression.tsv.gz filter=lfs diff=lfs merge=lfs -text

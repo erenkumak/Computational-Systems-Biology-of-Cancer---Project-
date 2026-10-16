@@ -5,3 +5,5 @@ models/
 __pycache__/
 QC_programms/output/
 Eren_run/
+!/Case_study_2/Data/
+*Zone.Identifier

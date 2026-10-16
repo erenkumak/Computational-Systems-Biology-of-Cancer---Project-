@@ -1,0 +1,17 @@
+label,n_cells,included_in_conventional_trajectory
+CD4+T,433,True
+CD8+T,297,True
+CD8αα(I),105,False
+CD8αα(II),95,False
+DN(P),1000,True
+DN(Q),1000,True
+DN(early),326,True
+DP(P),1000,True
+DP(Q),1000,True
+NKT,10,False
+T(agonist),86,False
+Th17,21,False
+Treg,19,False
+Treg(diff),38,False
+αβT(entry),622,True
+γδT,64,False

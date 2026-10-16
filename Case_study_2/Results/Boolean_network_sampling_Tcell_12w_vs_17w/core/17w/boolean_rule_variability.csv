@@ -1,0 +1,11 @@
+week,gene,n_models,distinct_textual_rules,most_frequent_rule_fraction,most_frequent_rule
+17w,AR,50,3,0.52,1
+17w,ETS1,50,2,0.56,1
+17w,FOXP1,50,1,1.0,!TP53
+17w,GATA3,50,1,1.0,0
+17w,IRF1,50,1,1.0,0
+17w,RUNX1,50,2,0.58,0
+17w,STAT1,50,2,0.58,FOXP1
+17w,STAT3,50,2,0.98,!TP53
+17w,TP53,50,3,0.6,!STAT3
+17w,ZEB1,50,2,0.56,0

@@ -1,0 +1,39 @@
+// Number of models containing each regulatory influence
+digraph models_per_edge {
+	graph [bgcolor=white overlap=false rankdir=LR splines=true]
+	E2F1 [label="E2F1
+3 funcs
+0: 13
+1: 20" fillcolor=cornsilk fontcolor=black fontname=Arial fontsize=18 shape=box style="rounded,filled"]
+	ETS1 [label="ETS1
+1 funcs" fillcolor=darkgoldenrod2 fontcolor=black fontname=Arial fontsize=22 shape=box style="rounded,filled,bold"]
+	FOS [label="FOS
+1 funcs" fillcolor=darkgoldenrod2 fontcolor=black fontname=Arial fontsize=22 shape=box style="rounded,filled,bold"]
+	FOXP1 [label="FOXP1
+4 funcs" fillcolor=white fontcolor=black fontname=Arial fontsize=17 shape=box style="rounded,filled"]
+	GATA3 [label="GATA3
+3 funcs" fillcolor=cornsilk fontcolor=black fontname=Arial fontsize=18 shape=box style="rounded,filled"]
+	MYC [label="MYC
+5 funcs
+0: 27" fillcolor=white fontcolor=black fontname=Arial fontsize=17 shape=box style="rounded,filled"]
+	RUNX1 [label="RUNX1
+4 funcs" fillcolor=white fontcolor=black fontname=Arial fontsize=17 shape=box style="rounded,filled"]
+	STAT3 [label="STAT3
+1 funcs
+1: 50" fillcolor=darkgoldenrod2 fontcolor=black fontname=Arial fontsize=22 shape=box style="rounded,filled,bold"]
+	GATA3 -> ETS1 [label=50 arrowhead=tee arrowsize=1.0 color=firebrick fontcolor=firebrick fontname=Arial fontsize=17 penwidth=13]
+	ETS1 -> FOS [label=50 arrowhead=normal arrowsize=0.8 color=darkgreen fontcolor=darkgreen fontname=Arial fontsize=17 penwidth=13]
+	STAT3 -> FOS [label=50 arrowhead=normal arrowsize=0.8 color=darkgreen fontcolor=darkgreen fontname=Arial fontsize=17 penwidth=13]
+	RUNX1 -> FOXP1 [label=50 arrowhead=normal arrowsize=0.8 color=darkgreen fontcolor=darkgreen fontname=Arial fontsize=17 penwidth=13]
+	FOS -> FOXP1 [label=10 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=2]
+	STAT3 -> FOXP1 [label=8 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=2]
+	FOS -> GATA3 [label=33 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=4]
+	E2F1 -> GATA3 [label=19 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=2]
+	ETS1 -> RUNX1 [label=50 arrowhead=normal arrowsize=0.8 color=darkgreen fontcolor=darkgreen fontname=Arial fontsize=17 penwidth=13]
+	STAT3 -> RUNX1 [label=8 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=2]
+	GATA3 -> RUNX1 [label=3 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=1]
+	E2F1 -> MYC [label=14 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=2]
+	ETS1 -> MYC [label=9 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=2]
+	GATA3 -> MYC [label=4 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=1]
+	MYC -> E2F1 [label=17 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=2]
+}

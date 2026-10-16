@@ -1,0 +1,13 @@
+week,constraint,from_state,to_state
+12w,reachability,S3,S0
+12w,reachability,S0,S2
+12w,reachability,S2,S4
+12w,reachability,S3,S6
+12w,reachability,S0,S1
+12w,reachability,S3,S7
+12w,fixed_point,S4,S4
+17w,reachability,S3,S0
+17w,reachability,S0,S1
+17w,reachability,S3,S5
+17w,reachability,S3,S4
+17w,fixed_point,S4,S4

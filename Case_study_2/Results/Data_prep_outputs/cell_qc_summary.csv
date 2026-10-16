@@ -1,0 +1,3 @@
+age,cells_before,cells_after,removed_by_gene_qc,removed_by_umi_qc,raw_umi_qc_verified,normalization
+12w,6116,6116,0,unknown: no raw UMI counts,False,unchanged: input already noninteger/preprocessed
+17w,7673,7673,0,unknown: no raw UMI counts,False,unchanged: input already noninteger/preprocessed

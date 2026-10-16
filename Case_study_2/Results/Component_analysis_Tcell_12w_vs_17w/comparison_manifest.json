@@ -1,0 +1,110 @@
+{
+  "source_notebook": "4-Component_selection.ipynb",
+  "method": "Separate proven-optimal BoNesis component selection for each week",
+  "comparison": "12 versus 17 PCW, no hematopoiesis reference-model comparison",
+  "limitations": "Different prior-network candidate domains and biological sampling; S4 stability is a model assumption; SCC reduction does not revalidate dynamics",
+  "manual_dynamics_from_selection_notebook": {
+    "12w": {
+      "root": "S3",
+      "fixed_points": [
+        "S4"
+      ],
+      "positive_reachability": [
+        [
+          "S3",
+          "S0"
+        ],
+        [
+          "S0",
+          "S2"
+        ],
+        [
+          "S2",
+          "S4"
+        ],
+        [
+          "S3",
+          "S6"
+        ],
+        [
+          "S0",
+          "S1"
+        ],
+        [
+          "S3",
+          "S7"
+        ]
+      ],
+      "not_imposed": [
+        [
+          "S2",
+          "S5"
+        ]
+      ],
+      "main_route": [
+        "S3",
+        "S0",
+        "S2",
+        "S4"
+      ]
+    },
+    "17w": {
+      "root": "S3",
+      "fixed_points": [
+        "S4"
+      ],
+      "positive_reachability": [
+        [
+          "S3",
+          "S0"
+        ],
+        [
+          "S0",
+          "S1"
+        ],
+        [
+          "S3",
+          "S5"
+        ],
+        [
+          "S3",
+          "S4"
+        ]
+      ],
+      "not_imposed": [
+        [
+          "S0",
+          "S2"
+        ]
+      ],
+      "main_route": [
+        "S3",
+        "S4"
+      ]
+    }
+  },
+  "weeks": {
+    "12w": {
+      "clingo_answer_id": 806,
+      "log_sha256": "ffbd2ea869e326cdde21c0136bf7cfaf0ff5570f1f85c052133b336b9241142a",
+      "candidate_sif_sha256": "b2eaae1da4f4bfc61c9fbffdd42a54d102ceb7f60f5aa7af9f522e31e62d7e32",
+      "observation_sha256": "dbb70f50b28420a3f194f72bbebda1df49d42c8ed36ac5a7734e30b201ba3d3a",
+      "biological_seed_sha256": "1589b0152d274fec0c9105ae385d43e09c6dc7f1e924b6065a1ab933e97298cc",
+      "core_sif": "../Results/Component_analysis_Tcell_12w_vs_17w/12w/synthesis_core_network.sif",
+      "required_fixed_points": [
+        "S4"
+      ]
+    },
+    "17w": {
+      "clingo_answer_id": 931,
+      "log_sha256": "62f1e987deb87d847d33fda150195f98494910864b20799ba84a64c8ae2119c5",
+      "candidate_sif_sha256": "b02a7f9b220b921566deeaf31935c6d8349724ce7e273e4bec3521d524b95890",
+      "observation_sha256": "aae58241b9d7872e154f7fc442ced3f039ca6faf67bbce1997f434cfd9add036",
+      "biological_seed_sha256": "384614d3b2df4d7b6697c43d66ac04abd7b0962da050f82d51381a7e2b4379d0",
+      "core_sif": "../Results/Component_analysis_Tcell_12w_vs_17w/17w/synthesis_core_network.sif",
+      "required_fixed_points": [
+        "S4"
+      ]
+    }
+  }
+}

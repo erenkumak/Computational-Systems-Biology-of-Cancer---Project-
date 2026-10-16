@@ -1,0 +1,61 @@
+{
+  "week": "12w",
+  "trajectory_mode": "conventional",
+  "cells_in_prepared_input": 6116,
+  "conventional_cells_before_sampling": 5678,
+  "excluded_nonconventional_cells": 438,
+  "selected_t_cells": 1650,
+  "included_cell_types": [
+    "DN(early)",
+    "DN(P)",
+    "DN(Q)",
+    "DP(P)",
+    "DP(Q)",
+    "\u03b1\u03b2T(entry)",
+    "CD4+T",
+    "CD8+T"
+  ],
+  "sampling_target_cells": 1650,
+  "sampling_seed": 42,
+  "gene_selection": "STREAM default filter_genes + select_variable_genes",
+  "genes_after_stream_filtering": 14595,
+  "root": "S3",
+  "early_root_labels": [
+    "DN(early)"
+  ],
+  "stage_order_diagnostic_inversions": [
+    "DN(early) > DN(P)",
+    "DN(P) > DN(Q)"
+  ],
+  "states": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7"
+  ],
+  "n_branches": 7,
+  "marker_genes_available": [
+    "CD34",
+    "CD7",
+    "CD1A",
+    "ST18",
+    "PTCRA",
+    "CDK1",
+    "MKI67",
+    "RAG1",
+    "RAG2",
+    "AQP3",
+    "CCR9",
+    "TOX2",
+    "CD4",
+    "CD8A",
+    "CD8B"
+  ],
+  "dimension_reduction": "STREAM defaults",
+  "stream_variable_gene_n_jobs": 4,
+  "input": "/home/eren/Eren_run/Case_study_2/Results/Data_prep_outputs/12w_expression.tsv.gz"
+}

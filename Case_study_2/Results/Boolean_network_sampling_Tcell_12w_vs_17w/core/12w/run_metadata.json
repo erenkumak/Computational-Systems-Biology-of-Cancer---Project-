@@ -1,0 +1,53 @@
+{
+  "week": "12w",
+  "network_level": "largest_scc",
+  "number_requested": 50,
+  "diverse_sampling": true,
+  "maxclause": 8,
+  "modeled_gene_count": 8,
+  "signed_edge_count": 21,
+  "clingo_optimal_answer_id": 806,
+  "input_sif_sha256": "e370eaa1479c5a8ab14f704df04b0ddbfe11b1d7e0d605d4f2b4ca486dcfa356",
+  "input_observations_sha256": "dbb70f50b28420a3f194f72bbebda1df49d42c8ed36ac5a7734e30b201ba3d3a",
+  "required_fixed_points": [
+    "S4"
+  ],
+  "positive_reachability": [
+    [
+      "S3",
+      "S0"
+    ],
+    [
+      "S0",
+      "S2"
+    ],
+    [
+      "S2",
+      "S4"
+    ],
+    [
+      "S3",
+      "S6"
+    ],
+    [
+      "S0",
+      "S1"
+    ],
+    [
+      "S3",
+      "S7"
+    ]
+  ],
+  "negative_reachability": [],
+  "label": "12 PCW",
+  "status": "complete",
+  "number_saved": 50,
+  "resumed_from_existing": 0,
+  "diverse_proposals_this_run": 287,
+  "enumeration_proposals_this_run": 0,
+  "duplicates_skipped_this_run": 237,
+  "max_diverse_attempts": 500,
+  "max_enumeration_attempts": 1000,
+  "preflight_passed": true,
+  "elapsed_seconds_this_run": 10.45
+}

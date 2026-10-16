@@ -1,0 +1,34 @@
+{
+  "root": "S3",
+  "fixed_points": [
+    "S4"
+  ],
+  "positive_reachability": [
+    [
+      "S3",
+      "S0"
+    ],
+    [
+      "S0",
+      "S1"
+    ],
+    [
+      "S3",
+      "S5"
+    ],
+    [
+      "S3",
+      "S4"
+    ]
+  ],
+  "not_imposed": [
+    [
+      "S0",
+      "S2"
+    ]
+  ],
+  "main_route": [
+    "S3",
+    "S4"
+  ]
+}
