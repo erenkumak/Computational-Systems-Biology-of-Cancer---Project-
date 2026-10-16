@@ -76,7 +76,7 @@ Refer to the environment configuration files and the corresponding notebooks for
 
 ## Analysis of results: comparing trajectories in samples from 7 post-conception weeks (PCW) vs 12 PCW:
 
-# Paper results
+### Paper results
 In the Park et al paper, the authors found differences in T-cell populations according to the development stage of the organism. 
 - At 7 PCW, the lymphoid compartment contained NK cells, γδ T cells, and ILC3s, with very few differentiating αβT cells, with differentiating T cells mostly found at DN stage
 - At 12 weeks, the DN cells progressed to SP (single-positive) stage and found an equilibrium in that state
@@ -86,7 +86,7 @@ The standard trajectory for T-cell differentiation they obtained by analysing kn
 - MAIN LINEAGE: CD4−CD8− DN cells —> CD4+CD8+ DP cells ->  CCR9high Tαβ(entry) stage -> mature CD4+ or CD8+ SP cells
 - SEPARATE lineage: DN-DP --> γδ T cell
 
-# Our results: 
+### Our results: 
 The T-cell differentiation trajectories for 12PCW and 17PCW were obtained using the STREAM notebook. 
 
 12PCW:
