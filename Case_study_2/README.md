@@ -82,15 +82,20 @@ In the Park et al paper, the authors found differences in T-cell populations acc
 - At 12 weeks, the DN cells progressed to SP (single-positive) stage and found an equilibrium in that state
 - Past 12 PCW, the paper found an increase in terminally differentiated CD4+ and CD8+ cells
 
+The standard trajectory for T-cell differentiation they obtained by analysing known biomarkers at each T-cell stage is the following:
+- MAIN LINEAGE: CD4−CD8− DN cells —> CD4+CD8+ DP cells ->  CCR9high Tαβ(entry) stage -> mature CD4+ or CD8+ SP cells
+- SEPARATE lineage: DN-DP --> γδ T cell
+
 # Our results: 
 The T-cell differentiation trajectories for 12PCW and 17PCW were obtained using the STREAM notebook. 
 
+12PCW:
 <img src="Results/Results_trajectory_12PCW.jpeg" alt="12PCW Trajectory" width="500">
+
+17PCW:
 <img src="Results/Results_trajectory_17PCW.jpeg" alt="17PCW Trajectory" width="500">
 
-
-![17PCW Trajectory ](Results/Results_trajectory_17PCW.jpeg)
-
+- 
 
 
 ## References
