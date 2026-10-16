@@ -90,7 +90,7 @@ The standard trajectory for T-cell differentiation they obtained by analysing kn
 The T-cell differentiation trajectories for 12PCW and 17PCW were obtained using the STREAM notebook. 
 
 12PCW:
-<img src="Results/Results_trajectory_12PCW.jpeg" alt="12PCW Trajectory" width="500">
+<img src="Results/Results_trajectory_12PCW.jpg" alt="12PCW Trajectory" width="500">
 
 17PCW:
 <img src="Results/Results_trajectory_17PCW.jpeg" alt="17PCW Trajectory" width="500">
