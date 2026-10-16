@@ -1,0 +1,413 @@
+---
+title: "STREAM-guided gene binarization: 12 PCW and 17 PCW"
+date: "2026-10-16"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    code_folding: show
+---
+
+# 1. Aim and inputs
+
+This notebook adapts the distribution-based binarization in the original `Binarization.Rmd` created for case study 1 to the **two independently fitted STREAM trajectories** of conventional human thymic T cells. The thresholds, cell-level gene calls, and STREAM state profiles are all computed **separately for 12 PCW and 17 PCW**; no cross-week comparison is performed.
+
+For each week, the inputs from the existing STREAM notebook are:
+
+| File | Purpose |
+|:--|:--|
+| `../Results/Data_prep_outputs/{week}_expression.tsv.gz` | Prepared expression matrix used as STREAM input (no further normalization here) |
+| `../Results/STREAM_outputs/{week}/tables/sampled_cell_ids.csv` | Exact 1,650 sampled conventional T-cell IDs |
+| `../Results/STREAM_outputs/{week}/tables/all_cells_distances_long.csv` | Distance from each sampled cell to each fitted STREAM state |
+| `../Results/STREAM_outputs/{week}/tables/selected_stream_variable_genes.csv` | Optional restriction to STREAM-selected variable genes |
+
+The expression importer recognizes **genes × cells** or **cells × genes** orientation. It uses the saved cell IDs rather than resampling. The STREAM states differ between weeks: the completed runs reported **8 states for 12 PCW** and **6 states for 17 PCW** (7 and 5 *branches*, respectively). State names such as `S3` are local to each fitted tree.
+
+**Classification:** low expression = `0`, high expression = `1`, and uncertain/unclassifiable = `ND`. Bimodal genes use high-confidence two-component Gaussian-mixture cutoffs, other retained genes use the outlier-sum-style IQR tail cutoffs. Per state, the 50 nearest cells vote for each gene: `0` or `1` wins only if it strictly outnumbers **both** other categories; otherwise the state call is `ND`.
+
+## 1.1 Setup and paths
+
+```{r setup, message=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+
+library(data.table)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(mclust)
+library(diptest)
+library(moments)
+
+WEEKS <- c("12w", "17w")
+PREP_DIR <- "../Results/Data_prep_outputs"
+STREAM_DIR <- "../Results/STREAM_outputs"
+OUTPUT_DIR <- "../Results/Binarization_outputs"
+GENE_SCOPE <- "all"             
+N_CELLS_PER_STATE <- 50
+
+stopifnot(GENE_SCOPE %in% c("all", "stream_variable"))
+dir.create(OUTPUT_DIR, recursive = TRUE, showWarnings = FALSE)
+```
+
+# 2. Load exactly the cells used in STREAM
+
+The same cell IDs are used for binarization and for calculating distance to fitted graph states. Expression is read from the **prepared STREAM input**, not from the older Nestorowa dataset and not from a concatenation of weeks.
+
+```{r input_helpers}
+read_week_inputs <- function(week) {
+  tables_dir <- file.path(STREAM_DIR, week, "tables")
+  ids_file <- file.path(tables_dir, "sampled_cell_ids.csv")
+  distances_file <- file.path(tables_dir, "all_cells_distances_long.csv")
+  expression_file <- file.path(PREP_DIR, paste0(week, "_expression.tsv.gz"))
+  needed <- c(ids_file, distances_file, expression_file)
+  if (!all(file.exists(needed))) {
+    stop("Missing files for ", week, ": ", paste(needed[!file.exists(needed)], collapse = ", "))
+  }
+
+  sampled <- fread(ids_file, data.table = FALSE, check.names = FALSE)
+  distances <- fread(distances_file, data.table = FALSE, check.names = FALSE)
+  if (!"cell_id" %in% names(sampled)) stop("sampled_cell_ids.csv lacks 'cell_id'")
+  if (!all(c("cell_id", "state", "distance_along_tree") %in% names(distances))) {
+    stop("all_cells_distances_long.csv lacks required columns")
+  }
+  ids <- as.character(sampled$cell_id)
+  distances$cell_id <- as.character(distances$cell_id)
+  distances$state <- as.character(distances$state)
+
+  if (anyNA(ids) || anyDuplicated(ids) || length(ids) != 1650L) {
+    stop(week, ": expected 1,650 unique sampled cell IDs")
+  }
+  if (!setequal(ids, unique(distances$cell_id))) {
+    stop(week, ": STREAM distance cells do not match the saved sample IDs")
+  }
+  if ("week" %in% names(distances) && !all(distances$week == week)) {
+    stop(week, ": unexpected week labels in the distance file")
+  }
+  if (anyNA(distances$distance_along_tree) ||
+      any(!is.finite(distances$distance_along_tree)) ||
+      any(distances$distance_along_tree < 0)) {
+    stop(week, ": invalid STREAM tree distances")
+  }
+  if (anyDuplicated(distances[c("state", "cell_id")])) {
+    stop(week, ": duplicate cell/state pairs in STREAM distances")
+  }
+  states <- sort(unique(distances$state))
+  if (any(table(distances$state) != length(ids))) {
+    stop(week, ": every STREAM state must have one distance for every sampled cell")
+  }
+
+  # Inspect column names before reading the large expression table.
+  header <- names(fread(expression_file, nrows = 0L, check.names = FALSE))
+  first_name <- header[1]
+  if (all(ids %in% header[-1])) {
+    # Genes are rows; read only the 1,650 columns used in the fitted graph.
+    raw <- fread(expression_file, select = c(first_name, ids),
+                 data.table = FALSE, check.names = FALSE)
+    gene_ids <- as.character(raw[[first_name]])
+    expression <- t(as.matrix(raw[, ids, drop = FALSE]))
+    rownames(expression) <- ids
+    colnames(expression) <- gene_ids
+    orientation <- "genes x cells"
+  } else {
+    # The alternate layout stores cell IDs in the first column.
+    first_col <- as.character(fread(expression_file, select = 1L,
+                                    data.table = FALSE)[[1]])
+    if (!all(ids %in% first_col)) {
+      stop(week, ": sampled cell IDs are not found on either expression axis")
+    }
+    raw <- fread(expression_file, data.table = FALSE, check.names = FALSE)
+    expression <- as.matrix(raw[match(ids, as.character(raw[[1]])), -1, drop = FALSE])
+    rownames(expression) <- ids
+    orientation <- "cells x genes"
+  }
+  rm(raw)
+  storage.mode(expression) <- "double"
+  if (anyDuplicated(colnames(expression)) || anyNA(colnames(expression))) {
+    stop(week, ": gene IDs must be unique and non-missing")
+  }
+  if (any(expression < 0, na.rm = TRUE) || any(is.infinite(expression))) {
+    stop(week, ": expression must be finite and nonnegative where observed")
+  }
+
+  if (GENE_SCOPE == "stream_variable") {
+    gene_file <- file.path(tables_dir, "selected_stream_variable_genes.csv")
+    if (!file.exists(gene_file)) stop("Missing STREAM variable-gene list: ", gene_file)
+    chosen_genes <- fread(gene_file, data.table = FALSE)$gene
+    chosen_genes <- as.character(chosen_genes)
+    if (!all(chosen_genes %in% colnames(expression))) {
+      stop(week, ": variable genes missing from expression input")
+    }
+    expression <- expression[, chosen_genes, drop = FALSE]
+  }
+
+  stopifnot(identical(rownames(expression), ids))
+  list(expression = expression, distances = distances, states = states,
+       ids = ids, orientation = orientation)
+}
+```
+
+# 3. Distribution-based gene binarization
+
+The thresholds below reproduce the original classification rules **within each week**. Genes with negligible expression variation or more than 95% zeros are discarded. 
+
+## 3.1 Gene distribution and classification functions
+
+```{r binarization_helpers}
+fit_two_modes <- function(x) {
+  x <- x[is.finite(x)]
+  if (length(x) < 10L || length(unique(x)) < 3L) return(NULL)
+  tryCatch(
+    suppressWarnings(Mclust(x, G = 2, modelNames = "E", verbose = FALSE)),
+    error = function(e) NULL
+  )
+}
+
+bimodality_index <- function(fit) {
+  if (is.null(fit)) return(NA_real_)
+  sigma <- sqrt(fit$parameters$variance$sigmasq)
+  if (!is.finite(sigma) || sigma <= 0) return(NA_real_)
+  delta <- abs(diff(fit$parameters$mean)) / sigma
+  pi <- fit$parameters$pro[1]
+  as.numeric(delta * sqrt(pi * (1 - pi)))
+}
+
+OSclass <- function(x) {
+  valid <- x[is.finite(x)]
+  result <- rep(NA_integer_, length(x))
+  if (!length(valid)) return(result)
+  q <- quantile(valid, c(0.25, 0.75), names = FALSE)
+  spread <- q[2] - q[1]
+  result[which(is.finite(x) & x < q[1] - spread)] <- 0L
+  result[which(is.finite(x) & x > q[2] + spread)] <- 1L
+  result
+}
+
+BIMclass <- function(x) {
+  result <- rep(NA_integer_, length(x))
+  fit <- fit_two_modes(x)
+  if (is.null(fit)) return(result)
+  low <- which.min(fit$parameters$mean)
+  high <- which.max(fit$parameters$mean)
+  confident_low <- fit$data[fit$classification == low & fit$uncertainty <= 0.05]
+  confident_high <- fit$data[fit$classification == high & fit$uncertainty <= 0.05]
+  if (!length(confident_low) || !length(confident_high)) return(result)
+  low_cutoff <- max(confident_low)
+  high_cutoff <- min(confident_high)
+  if (low_cutoff >= high_cutoff) return(result)
+  result[which(is.finite(x) & x <= low_cutoff)] <- 0L
+  result[which(is.finite(x) & x >= high_cutoff)] <- 1L
+  result
+}
+
+compute_criteria <- function(expression) {
+  genes <- colnames(expression)
+  criteria <- data.frame(Gene = genes, Amplitude = NA_real_,
+                         Dip = NA_real_, BI = NA_real_, Kurtosis = NA_real_,
+                         DropOutRate = NA_real_, MeanNZ = NA_real_,
+                         DenPeak = NA_real_, Category = NA_character_)
+
+  # First compute inexpensive statistics for all genes.
+  for (i in seq_along(genes)) {
+    x <- expression[, i]
+    x <- x[is.finite(x)]
+    if (!length(x)) next
+    criteria$Amplitude[i] <- max(x) - min(x)
+    criteria$DropOutRate[i] <- mean(x == 0)
+    if (any(x != 0)) criteria$MeanNZ[i] <- mean(x[x != 0])
+  }
+
+  threshold <- median(criteria$Amplitude, na.rm = TRUE) / 10
+  discarded <- is.na(criteria$Amplitude) | criteria$Amplitude == 0 |
+    criteria$Amplitude < threshold | criteria$DropOutRate > 0.95
+  discarded[is.na(discarded)] <- TRUE
+  criteria$Category[discarded] <- "Discarded"
+
+  # Fit distributions only for genes that could receive binary calls.
+  retained <- which(!discarded)
+  pb <- txtProgressBar(min = 0, max = length(retained), style = 3)
+  for (j in seq_along(retained)) {
+    i <- retained[j]
+    x <- expression[, i]
+    x <- x[is.finite(x)]
+    if (length(x) >= 2L) {
+      criteria$Dip[i] <- tryCatch(dip.test(x)$p.value, error = function(e) NA_real_)
+      fit <- fit_two_modes(x)
+      criteria$BI[i] <- bimodality_index(fit)
+      criteria$Kurtosis[i] <- tryCatch(kurtosis(x) - 3, error = function(e) NA_real_)
+      criteria$DenPeak[i] <- tryCatch({
+        d <- density(x, na.rm = TRUE)
+        d$x[which.max(d$y)]
+      }, error = function(e) NA_real_)
+    }
+    if (j %% 100L == 0L || j == length(retained)) setTxtProgressBar(pb, j)
+  }
+  close(pb)
+
+  is_bimodal <- !discarded & !is.na(criteria$BI) & !is.na(criteria$Dip) &
+    !is.na(criteria$Kurtosis) & criteria$BI > 1.5 &
+    criteria$Dip < 0.05 & criteria$Kurtosis < 1
+  criteria$Category[is_bimodal] <- "Bimodal"
+  is_zero_inf <- is.na(criteria$Category) & !is.na(criteria$DenPeak) &
+    criteria$DenPeak < threshold
+  criteria$Category[is_zero_inf] <- "ZeroInf"
+  criteria$Category[is.na(criteria$Category)] <- "Unimodal"
+  criteria
+}
+
+binarize_cells <- function(expression, criteria) {
+  stopifnot(identical(colnames(expression), criteria$Gene))
+  calls <- matrix(NA_integer_, nrow(expression), ncol(expression),
+                  dimnames = dimnames(expression))
+  for (i in seq_len(ncol(expression))) {
+    category <- criteria$Category[i]
+    if (category == "Discarded") next
+    if (category == "Bimodal") {
+      calls[, i] <- BIMclass(expression[, i])
+    } else {
+      calls[, i] <- OSclass(expression[, i])
+    }
+  }
+  calls
+}
+```
+
+# 4. Aggregate the 50 closest cells around each STREAM state
+
+For each fitted state, the nearest 50 sampled cells are selected using `distance_along_tree` from STREAM. 
+
+```{r state_helpers}
+select_stream_cells <- function(distances, n = N_CELLS_PER_STATE) {
+  distances %>%
+    group_by(state) %>%
+    arrange(distance_along_tree, cell_id, .by_group = TRUE) %>%
+    slice_head(n = n) %>%
+    ungroup()
+}
+
+aggregate_states <- function(calls, selected) {
+  states <- sort(unique(selected$state))
+  profiles <- matrix(NA_integer_, length(states), ncol(calls),
+                     dimnames = list(states, colnames(calls)))
+  for (state in states) {
+    cells <- selected$cell_id[selected$state == state]
+    if (!all(cells %in% rownames(calls))) stop("Unknown cell ID for state ", state)
+    sub <- calls[cells, , drop = FALSE]
+    n0 <- colSums(sub == 0L, na.rm = TRUE)
+    n1 <- colSums(sub == 1L, na.rm = TRUE)
+    nND <- colSums(is.na(sub))
+    profiles[state, n0 > n1 & n0 > nND] <- 0L
+    profiles[state, n1 > n0 & n1 > nND] <- 1L
+  }
+  profiles
+}
+```
+
+# 5. Run and export each week independently
+
+For **each week**, export four main files into its own directory:
+
+- `cell_binarization.csv`: sampled cells × genes, with `CELL_ID` and `0/1/ND` calls.
+- `gene_binarization_criteria.csv`: per-gene distribution statistics and classifier category.
+- `selected_stream_cells.csv`: 50 representative cells per STREAM state, with distances.
+- `stream_state_binarization.csv`: STREAM states × genes, with `State` and `0/1/ND` calls.
+
+Additional summary tables and two simple plots show the distribution categories and the fraction of each state profile that is determined.
+
+```{r run_week_function}
+run_week <- function(week) {
+  cat("\n=========", week, "=========\n")
+  out <- file.path(OUTPUT_DIR, week)
+  dir.create(out, recursive = TRUE, showWarnings = FALSE)
+  input <- read_week_inputs(week)
+  expression <- input$expression
+  cat("Expression:", nrow(expression), "cells x", ncol(expression), "genes\n")
+  cat("Input orientation:", input$orientation, "\n")
+  cat("STREAM states:", paste(input$states, collapse = ", "), "\n")
+
+  criteria <- compute_criteria(expression)
+  calls <- binarize_cells(expression, criteria)
+  selected <- select_stream_cells(input$distances)
+  state_binary <- aggregate_states(calls, selected)
+  stopifnot(identical(colnames(calls), colnames(state_binary)))
+  stopifnot(identical(sort(unique(selected$state)), rownames(state_binary)))
+
+  # One output folder per week; state names are never pooled across weeks.
+  write.csv(data.frame(CELL_ID = rownames(calls), calls, check.names = FALSE),
+            file.path(out, "cell_binarization.csv"), row.names = FALSE, na = "ND")
+  write.csv(criteria, file.path(out, "gene_binarization_criteria.csv"), row.names = FALSE)
+  write.csv(selected, file.path(out, "selected_stream_cells.csv"), row.names = FALSE)
+  write.csv(data.frame(State = rownames(state_binary), state_binary, check.names = FALSE),
+            file.path(out, "stream_state_binarization.csv"), row.names = FALSE, na = "ND")
+
+  # Report each state's number of 0, 1 and ND gene calls.
+  state_counts <- data.frame(
+    State = rownames(state_binary),
+    OFF = rowSums(state_binary == 0L, na.rm = TRUE),
+    ON = rowSums(state_binary == 1L, na.rm = TRUE),
+    ND = rowSums(is.na(state_binary)), check.names = FALSE
+  )
+  write.csv(state_counts, file.path(out, "state_call_counts.csv"), row.names = FALSE)
+  category_counts <- as.data.frame(table(criteria$Category))
+  names(category_counts) <- c("Category", "Genes")
+  write.csv(category_counts, file.path(out, "gene_category_counts.csv"), row.names = FALSE)
+
+  p1 <- ggplot(category_counts, aes(x = Category, y = Genes)) +
+    geom_col(fill = "#507EA4") + theme_minimal(base_size = 12) +
+    labs(title = paste(week, "gene distribution categories"), x = NULL, y = "Genes")
+  p2 <- state_counts %>%
+    pivot_longer(cols = c(OFF, ON, ND), names_to = "Call", values_to = "Genes") %>%
+    ggplot(aes(x = State, y = Genes, fill = Call)) +
+    geom_col(position = "fill") +
+    scale_fill_manual(values = c(OFF = "#6B9EBC", ON = "#D58F60", ND = "#BCBEC2")) +
+    scale_y_continuous(labels = scales::percent) +
+    theme_minimal(base_size = 12) +
+    labs(title = paste(week, "state-profile call coverage"), x = "STREAM state",
+         y = "Fraction of genes", fill = "Call")
+  print(p1)
+  print(p2)
+  ggsave(file.path(out, "gene_categories.png"), p1, width = 7, height = 4, dpi = 200)
+  ggsave(file.path(out, "state_call_coverage.png"), p2, width = 7, height = 4, dpi = 200)
+
+  summary <- data.frame(
+    Week = week, Cells = nrow(expression), Genes = ncol(expression),
+    States = nrow(state_binary), Nearest_cells_per_state = N_CELLS_PER_STATE,
+    Determined_cell_fraction = mean(!is.na(calls)),
+    Determined_state_fraction = mean(!is.na(state_binary)),
+    Gene_scope = GENE_SCOPE, stringsAsFactors = FALSE
+  )
+  write.csv(summary, file.path(out, "run_summary.csv"), row.names = FALSE)
+  cat("Results saved in:", normalizePath(out), "\n")
+  list(summary = summary, category_counts = category_counts,
+       state_counts = state_counts, state_binary = state_binary,
+       criteria = criteria)
+}
+```
+
+## 5.1 Binarize 12 PCW
+
+Here, thresholds are calculated from the **12 PCW sampled cells only**. The fitted STREAM neighborhood of each node is taken from `STREAM_outputs/12w/tables/`.
+
+```{r run_12w}
+results_12w <- run_week("12w")
+knitr::kable(results_12w$summary, digits = 3)
+knitr::kable(results_12w$state_counts)
+```
+
+## 5.2 Binarize 17 PCW
+
+This is a completely separate fit of the distribution classifiers on the **17 PCW sampled cells**.
+
+```{r run_17w}
+gc()
+results_17w <- run_week("17w")
+knitr::kable(results_17w$summary, digits = 3)
+knitr::kable(results_17w$state_counts)
+```
+
+# 6. Reading the results
+
+```{r reproducibility}
+writeLines(capture.output(sessionInfo()), file.path(OUTPUT_DIR, "session_info.txt"))
+sessionInfo()
+```
