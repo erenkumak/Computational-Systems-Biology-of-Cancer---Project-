@@ -39,8 +39,6 @@ Case_Study_2_T_cells/
     └── Outputs generated at each step of the analysis
 ```
 
-*Note: The tree above describes the intended organization. Adjust filenames and directory contents to match the files actually present in this case study.*
-
 ## Analysis Workflow
 
 The analysis consists of the following steps:
