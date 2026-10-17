@@ -45,6 +45,10 @@ This repository contains two applications of the methodology described by Cheval
 
 Each case study is organized into its own directory. Refer to the corresponding `README.md` file for details on its data, scripts, computational environments, and results.
 
+## AI Usage Statement
+
+Generative AI tools were used during the development of this project to assist with code generation, debugging, and troubleshooting. All AI-generated suggestions were reviewed and adapted as needed by the authors, who remain responsible for the implementation, analysis, interpretation of results, and conclusions presented in this repository.
+
 ## References
 
 1. **Chevalier, S. et al. (2025).** Article in *npj Systems Biology and Applications*, **11**, 105. https://doi.org/10.1038/s41540-025-00569-z
