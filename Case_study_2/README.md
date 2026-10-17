@@ -9,10 +9,10 @@ The data are available through the [Human Cell Atlas project](https://explore.da
 We focus on the human T-cell dataset, specifically `thymus_annotated_matrix_files/HTA08.v01.A06.Science_human_tcells.h5ad`. The original study describes expected cellular differentiation trajectories based on biological evidence. These trajectories serve as a reference for evaluating and corroborating the trajectories inferred using STREAM.
 
 Some input files for human genome annotation are too large for github access, and can be found here: 
-Homo_sapiens.gene_info: https://www.ncbi.nlm.nih.gov/refseq/annotation_euk/Homo_sapiens/108/
-msigdb.v2026.1.Hs.symbols.gmt: https://data.broadinstitute.org/gsea-msigdb/msigdb/release/2026.1.Hs/
 
-This case study explores whether the reconstructed pipeline can be applied to a different biological system and used to infer Boolean gene regulatory networks consistent with the observed T-cell differentiation process.
+Homo_sapiens.gene_info: https://www.ncbi.nlm.nih.gov/refseq/annotation_euk/Homo_sapiens/108/
+
+msigdb.v2026.1.Hs.symbols.gmt: https://data.broadinstitute.org/gsea-msigdb/msigdb/release/2026.1.Hs/
 
 ## Repository Structure
 
@@ -23,16 +23,13 @@ Case_Study_2_T_cells/
 ├── Models/
 │   └── Boolean network models generated using BoNesis
 ├── Code/
-│   ├── Data_treatment_QC.ipynb
-│   ├── Data_treatment_normalization.ipynb
-│   ├── STREAM.ipynb
-│   ├── Binarization.Rmd
-│   ├── Component_selection.ipynb
-│   ├── Component_analysis.ipynb
-│   ├── Boolean_network_sampling.ipynb
-│   ├── Ensemble_analysis.ipynb
-│   ├── Ensemble_analysis_clustered.ipynb
-│   └── Ensemble_analysis_interactiongraph.ipynb
+│   ├── 1_Data_prep.ipynb
+│   ├── 2-STREAM_T_cells_12w_17w.ipynb
+│   ├── 3-Binarization_STREAM_12w_17w.Rmd
+│   ├── 4-Component_selection.ipynb
+│   ├── 5-Component_analysis_12w_vs_17w.ipynb
+│   ├── 6-Boolean_network_sampling.ipynb
+│   └── 7-Ensemble_analysis_interactiongraph_Tcell_12w_17w.ipynb
 ├── Environment/
 │   └── Conda environment files
 └── Results/
