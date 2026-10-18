@@ -102,12 +102,12 @@ Therefore, although the methodology successfully recovers some of the expected T
 
 ## References
 
-* Chevalier, S. et al. (2025). *Article in npj Systems Biology and Applications*, **11**, 105. https://doi.org/10.1038/s41540-025-00569-z
+* Chevalier, S., Becker, J., Gui, Y. et al. Data-driven inference of Boolean networks from transcriptomes to predict cellular differentiation and reprogramming. npj Syst Biol Appl 11, 105 (2025). https://doi.org/10.1038/s41540-025-00569-z
 * Chen, H. et al. (2019). STREAM: Single-cell Trajectories Reconstruction, Exploration And Mapping of omics data. *Nature Communications*, **10**, 1903.
 * Béal, J. et al. (2019). [An approach for the inference of Boolean networks from gene expression data](https://doi.org/10.3389/fphys.2018.01965). *Frontiers in Physiology*, **9**, 1965.
 * Nestorowa, S. et al. (2016). A single-cell resolution map of mouse hematopoietic stem and progenitor cell differentiation. *Blood*, **128**, e20–e31.
 * Holland, C. H. et al. (2020). DoRothEA: a resource for the inference of transcription factor activities. *Biochimica et Biophysica Acta (BBA) – Gene Regulatory Mechanisms*, **1863**, 194431.
-* Chevalier, S. et al. (2024). BoNesis: Boolean Network Inference from Constraints. *Publication details to be confirmed.*
+* Chevalier, S., Boyenval, D., Magaña-López, G., Roncalli, T., Vaginay, A. & Paulevé, L. BoNesis: a Python-Based Declarative Environment for the Verification, Reprogramming, and Synthesis of Most Permissive Boolean Networks, pp 71–79. (Springer Nature Switzerland, 2024) https://doi.org/10.1007/978-3-031-71671-3_6.*
 * Park, J. E. et al. (2020). A cell atlas of human thymic development defines T cell repertoire formation. *Science*, **367**(6480), eaay3224. https://doi.org/10.1126/science.aay3224
 
 ## Acknowledgments
