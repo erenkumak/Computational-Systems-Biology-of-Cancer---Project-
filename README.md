@@ -61,7 +61,7 @@ Generative AI tools were used during the development of this project to assist w
 
 5. **Holland, C. H. et al. (2020).** DoRothEA: a resource for the inference of transcription factor activities. *Biochimica et Biophysica Acta (BBA) – Gene Regulatory Mechanisms*, **1863**, 194431.
 
-6. **Chevalier, S. et al. (2024).** BoNesis: Boolean Network Inference from Constraints. *Publication details to be confirmed.*
+6. **Chevalier, S., Becker, J., Gui, Y. et al.** Data-driven inference of Boolean networks from transcriptomes to predict cellular differentiation and reprogramming. npj Syst Biol Appl 11, 105 (2025). https://doi.org/10.1038/s41540-025-00569-z.
 
 7. **Park, J. E. et al. (2020).** A cell atlas of human thymic development defines T cell repertoire formation. *Science*, **367**(6480), eaay3224. https://doi.org/10.1126/science.aay3224
 
