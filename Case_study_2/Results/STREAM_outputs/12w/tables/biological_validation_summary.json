@@ -1,0 +1,9 @@
+{
+  "week": "12w",
+  "rooted_from": "DN(early) only",
+  "stage_order_descriptive_inversions": [
+    "DN(early) > DN(P)",
+    "DN(P) > DN(Q)"
+  ],
+  "note": "Median ordering is descriptive; non-monotonic medians and branching require biological review. No trajectory constraints applied."
+}

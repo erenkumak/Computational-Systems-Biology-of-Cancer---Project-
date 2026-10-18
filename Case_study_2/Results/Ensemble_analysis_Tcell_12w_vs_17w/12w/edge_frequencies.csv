@@ -1,0 +1,16 @@
+source,target,influence,n_models,percent_models
+GATA3,ETS1,inhibition,50,100.0
+ETS1,FOS,activation,50,100.0
+STAT3,FOS,activation,50,100.0
+RUNX1,FOXP1,activation,50,100.0
+FOS,FOXP1,activation,10,20.0
+STAT3,FOXP1,activation,8,16.0
+FOS,GATA3,activation,33,66.0
+E2F1,GATA3,activation,19,38.0
+ETS1,RUNX1,activation,50,100.0
+STAT3,RUNX1,activation,8,16.0
+GATA3,RUNX1,activation,3,6.0
+E2F1,MYC,activation,14,28.0
+ETS1,MYC,activation,9,18.0
+GATA3,MYC,activation,4,8.0
+MYC,E2F1,activation,17,34.0

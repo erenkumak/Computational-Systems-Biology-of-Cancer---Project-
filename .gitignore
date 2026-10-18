@@ -1,0 +1,9 @@
+data/
+paper_notebooks/
+models/
+**/__pycache__/
+__pycache__/
+QC_programms/output/
+Eren_run/
+!/Case_study_2/Data/
+*Zone.Identifier

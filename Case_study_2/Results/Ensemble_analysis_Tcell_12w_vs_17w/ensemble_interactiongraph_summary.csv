@@ -1,0 +1,3 @@
+week,model_count,gene_count,week,source,signed_edge_count,invariant_gene_count,sampling_complete,requested_models
+12w,50,8,12w,../Results/Boolean_network_sampling_Tcell_12w_vs_17w/core/12w,15,3,True,50
+17w,50,10,17w,../Results/Boolean_network_sampling_Tcell_12w_vs_17w/core/17w,11,3,True,50

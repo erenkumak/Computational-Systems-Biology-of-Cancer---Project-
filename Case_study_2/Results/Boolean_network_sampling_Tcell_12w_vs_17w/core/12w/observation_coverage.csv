@@ -1,0 +1,9 @@
+week,state,modeled_genes,determined_calls,undetermined_genes,is_fixed_point,is_on_required_route
+12w,S0,8,7,1,False,True
+12w,S1,8,7,1,False,True
+12w,S2,8,7,1,False,True
+12w,S3,8,7,1,False,True
+12w,S4,8,7,1,True,True
+12w,S5,8,7,1,False,False
+12w,S6,8,7,1,False,True
+12w,S7,8,7,1,False,True

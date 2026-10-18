@@ -1,0 +1,11 @@
+source,target,influence,12w_n_models,12w_percent_models,17w_n_models,17w_percent_models,17w_minus_12w_percentage_points
+ETS1,GATA3,activation,0,0.0,0,0.0,0.0
+ETS1,RUNX1,activation,50,100.0,0,0.0,-100.0
+FOXP1,STAT3,activation,0,0.0,1,2.0,2.0
+GATA3,ETS1,inhibition,50,100.0,22,44.0,-56.0
+GATA3,RUNX1,activation,3,6.0,21,42.0,36.0
+RUNX1,ETS1,activation,0,0.0,0,0.0,0.0
+RUNX1,FOXP1,activation,50,100.0,0,0.0,-100.0
+RUNX1,STAT3,activation,0,0.0,0,0.0,0.0
+STAT3,FOXP1,activation,8,16.0,0,0.0,-16.0
+STAT3,RUNX1,activation,8,16.0,21,42.0,26.0

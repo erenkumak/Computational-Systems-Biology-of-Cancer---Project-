@@ -1,0 +1,16 @@
+gene,present_in_expression_matrix,chosen_as_stream_variable_gene
+CD34,True,False
+CD7,True,True
+CD1A,True,True
+ST18,True,False
+PTCRA,True,True
+CDK1,True,True
+MKI67,True,True
+RAG1,True,True
+RAG2,True,True
+AQP3,True,True
+CCR9,True,True
+TOX2,True,True
+CD4,True,True
+CD8A,True,True
+CD8B,True,True

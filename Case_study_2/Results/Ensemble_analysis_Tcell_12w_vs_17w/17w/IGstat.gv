@@ -1,0 +1,44 @@
+// Number of models containing each regulatory influence
+digraph models_per_edge {
+	graph [bgcolor=white overlap=false rankdir=LR splines=true]
+	AR [label="AR
+3 funcs
+0: 9
+1: 26" fillcolor=cornsilk fontcolor=black fontname=Arial fontsize=18 shape=box style="rounded,filled"]
+	ETS1 [label="ETS1
+2 funcs
+1: 28" fillcolor=lightgoldenrod1 fontcolor=black fontname=Arial fontsize=19 shape=box style="rounded,filled"]
+	FOXP1 [label="FOXP1
+1 funcs" fillcolor=darkgoldenrod2 fontcolor=black fontname=Arial fontsize=22 shape=box style="rounded,filled,bold"]
+	GATA3 [label="GATA3
+1 funcs
+0: 50" fillcolor=darkgoldenrod2 fontcolor=black fontname=Arial fontsize=22 shape=box style="rounded,filled,bold"]
+	IRF1 [label="IRF1
+1 funcs
+0: 50" fillcolor=darkgoldenrod2 fontcolor=black fontname=Arial fontsize=22 shape=box style="rounded,filled,bold"]
+	RUNX1 [label="RUNX1
+2 funcs
+0: 29" fillcolor=lightgoldenrod1 fontcolor=black fontname=Arial fontsize=19 shape=box style="rounded,filled"]
+	STAT1 [label="STAT1
+2 funcs
+1: 21" fillcolor=lightgoldenrod1 fontcolor=black fontname=Arial fontsize=19 shape=box style="rounded,filled"]
+	STAT3 [label="STAT3
+2 funcs" fillcolor=lightgoldenrod1 fontcolor=black fontname=Arial fontsize=19 shape=box style="rounded,filled"]
+	TP53 [label="TP53
+3 funcs
+0: 19" fillcolor=cornsilk fontcolor=black fontname=Arial fontsize=18 shape=box style="rounded,filled"]
+	ZEB1 [label="ZEB1
+2 funcs
+0: 28" fillcolor=lightgoldenrod1 fontcolor=black fontname=Arial fontsize=19 shape=box style="rounded,filled"]
+	TP53 -> FOXP1 [label=50 arrowhead=tee arrowsize=1.0 color=firebrick fontcolor=firebrick fontname=Arial fontsize=17 penwidth=13]
+	TP53 -> STAT3 [label=49 arrowhead=tee arrowsize=1.0 color=lightcoral fontcolor=lightcoral fontname=Arial fontsize=17 penwidth=5]
+	FOXP1 -> STAT3 [label=1 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=1]
+	GATA3 -> ETS1 [label=22 arrowhead=tee arrowsize=1.0 color=lightcoral fontcolor=lightcoral fontname=Arial fontsize=17 penwidth=3]
+	STAT3 -> TP53 [label=31 arrowhead=tee arrowsize=1.0 color=lightcoral fontcolor=lightcoral fontname=Arial fontsize=17 penwidth=4]
+	STAT1 -> TP53 [label=1 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=1]
+	STAT3 -> RUNX1 [label=21 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=3]
+	GATA3 -> RUNX1 [label=21 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=3]
+	FOXP1 -> STAT1 [label=29 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=4]
+	GATA3 -> ZEB1 [label=22 arrowhead=normal arrowsize=0.8 color=darkolivegreen3 fontcolor=darkolivegreen3 fontname=Arial fontsize=17 penwidth=3]
+	ZEB1 -> AR [label=15 arrowhead=tee arrowsize=1.0 color=lightcoral fontcolor=lightcoral fontname=Arial fontsize=17 penwidth=3]
+}

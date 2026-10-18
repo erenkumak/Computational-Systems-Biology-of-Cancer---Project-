@@ -1,0 +1,8 @@
+{
+  "model_count": 50,
+  "gene_count": 10,
+  "week": "17w",
+  "source": "../Results/Boolean_network_sampling_Tcell_12w_vs_17w/core/17w",
+  "signed_edge_count": 11,
+  "invariant_gene_count": 3
+}

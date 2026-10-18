@@ -1,0 +1,3 @@
+week,network_level,modeled_genes,signed_regulations,stream_states,positive_reachabilities,S4_is_required_fixed_point,requested_models,saved_models,optimization_proven_in_original_candidate_domain,reduced_domain_preflight_checked,complete
+12w,largest_scc,8,21,8,6,True,50,50,True,True,True
+17w,largest_scc,10,24,6,4,True,50,50,True,True,True

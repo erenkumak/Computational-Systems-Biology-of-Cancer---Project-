@@ -1,0 +1,17 @@
+{
+  "our_input": "../Results/Boolean_network_sampling_outputs",
+  "their_input": "../Data/models",
+  "our_models": 50,
+  "their_models": 1000,
+  "our_genes": 39,
+  "their_genes": 39,
+  "shared_genes": 21,
+  "reference_group_sizes": {
+    "red": 5,
+    "orange": 885,
+    "green": 110
+  },
+  "our_exploratory_groups": null,
+  "comparison_metric": "gene-level Boolean-rule disagreement",
+  "reference_middle_point": "medoid (real central reference model)"
+}

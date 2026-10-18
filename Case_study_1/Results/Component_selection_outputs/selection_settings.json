@@ -1,0 +1,24 @@
+{
+  "msigdb_release": "2026.1.Mm",
+  "msigdb_url": "https://data.broadinstitute.org/gsea-msigdb/msigdb/release/2026.1.Mm/msigdb.v2026.1.Mm.symbols.gmt",
+  "search_terms": [
+    "HEMATOPOIESIS",
+    "HEMOPOIESIS",
+    "HEMATOPOIETIC",
+    "HEMOPOIETIC",
+    "HAEMATOPOIESIS",
+    "HAEMATOPOIETIC"
+  ],
+  "go_bp_only": false,
+  "min_matching_sets": 1,
+  "seed_top_n": 25,
+  "neighbor_hops": 1,
+  "include_short_bridges": true,
+  "max_bridge_edges": 3,
+  "n_extra_dynamic": 20,
+  "max_candidate_genes": 150,
+  "n_matched_sets": 48,
+  "n_matched_genes": 4972,
+  "n_selected_seeds": 25,
+  "n_candidate_genes": 149
+}

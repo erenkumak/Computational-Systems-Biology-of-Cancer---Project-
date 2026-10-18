@@ -1,0 +1,12 @@
+source,target,influence,n_models,percent_models
+TP53,FOXP1,inhibition,50,100.0
+TP53,STAT3,inhibition,49,98.0
+FOXP1,STAT3,activation,1,2.0
+GATA3,ETS1,inhibition,22,44.0
+STAT3,TP53,inhibition,31,62.0
+STAT1,TP53,activation,1,2.0
+STAT3,RUNX1,activation,21,42.0
+GATA3,RUNX1,activation,21,42.0
+FOXP1,STAT1,activation,29,58.0
+GATA3,ZEB1,activation,22,44.0
+ZEB1,AR,inhibition,15,30.0

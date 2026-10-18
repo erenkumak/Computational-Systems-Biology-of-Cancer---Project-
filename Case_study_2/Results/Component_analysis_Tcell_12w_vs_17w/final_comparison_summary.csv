@@ -1,0 +1,3 @@
+week,clingo_answer,biological_seeds,candidate_genes,selected_genes,strong_constants,nonconstant_genes,largest_SCC_genes,largest_SCC_signed_edges,state_count,S4_required_fixed_point,manually_specified_reachabilities
+12w,806,32,150,146,104,42,8,21,8,True,6
+17w,931,31,150,149,111,38,10,24,6,True,4

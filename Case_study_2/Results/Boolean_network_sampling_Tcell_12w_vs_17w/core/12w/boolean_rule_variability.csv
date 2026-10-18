@@ -1,0 +1,9 @@
+week,gene,n_models,distinct_textual_rules,most_frequent_rule_fraction,most_frequent_rule
+12w,E2F1,50,3,0.4,1
+12w,ETS1,50,1,1.0,!GATA3
+12w,FOS,50,2,0.6,ETS1|STAT3
+12w,FOXP1,50,5,0.66,RUNX1
+12w,GATA3,50,3,0.62,FOS
+12w,MYC,50,5,0.54,0
+12w,RUNX1,50,4,0.8,ETS1
+12w,STAT3,50,1,1.0,1
