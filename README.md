@@ -51,7 +51,7 @@ Generative AI tools were used during the development of this project to assist w
 
 ## References
 
-1. **Chevalier, S., Becker, J., Gui, Y. et al. Data-driven inference of Boolean networks from transcriptomes to predict cellular differentiation and reprogramming. npj Syst Biol Appl 11, 105 (2025). https://doi.org/10.1038/s41540-025-00569-z
+1. **Chevalier, S., Becker, J., Gui, Y. et al. ** Data-driven inference of Boolean networks from transcriptomes to predict cellular differentiation and reprogramming. npj Syst Biol Appl 11, 105 (2025). https://doi.org/10.1038/s41540-025-00569-z
 
 2. **Chen, H. et al. (2019).** STREAM: Single-cell Trajectories Reconstruction, Exploration And Mapping of omics data. *Nature Communications*, **10**, 1903.
 
