@@ -65,7 +65,7 @@ Replace `<environment_file>.yml` with the name of the relevant environment file.
 * Béal, J. et al. (2019). *[An approach for the inference of Boolean networks from gene expression data](https://doi.org/10.3389/fphys.2018.01965)*. *Frontiers in Physiology*, **9**, 1965.
 * Nestorowa, S. et al. (2016). A single-cell resolution map of mouse hematopoietic stem and progenitor cell differentiation. *Blood*, **128**, e20–e31.
 * Holland, C. H. et al. (2020). DoRothEA: a resource for the inference of transcription factor activities. *Biochimica et Biophysica Acta (BBA) – Gene Regulatory Mechanisms*, **1863**, 194431.
-* Chevalier, S. et al. (2024). BoNesis: Boolean Network Inference from Constraints. *Publication details to be confirmed*.
+* Chevalier, S., Boyenval, D., Magaña-López, G., Roncalli, T., Vaginay, A. & Paulevé, L. BoNesis: a Python-Based Declarative Environment for the Verification, Reprogramming, and Synthesis of Most Permissive Boolean Networks, pp 71–79. (Springer Nature Switzerland, 2024) https://doi.org/10.1007/978-3-031-71671-3_6.*
 
 ## Acknowledgments
 
