@@ -60,7 +60,7 @@ Replace `<environment_file>.yml` with the name of the relevant environment file.
 
 ## References
 
-* Chevalier, S. et al. (2025). *[Article in npj Systems Biology and Applications](https://doi.org/10.1038/s41540-025-00569-z)*, **11**, 105.
+* Chevalier, S., Becker, J., Gui, Y. et al. Data-driven inference of Boolean networks from transcriptomes to predict cellular differentiation and reprogramming. npj Syst Biol Appl 11, 105 (2025). https://doi.org/10.1038/s41540-025-00569-z
 * Chen, H. et al. (2019). STREAM: Single-cell Trajectories Reconstruction, Exploration And Mapping of omics data. *Nature Communications*, **10**, 1903.
 * Béal, J. et al. (2019). *[An approach for the inference of Boolean networks from gene expression data](https://doi.org/10.3389/fphys.2018.01965)*. *Frontiers in Physiology*, **9**, 1965.
 * Nestorowa, S. et al. (2016). A single-cell resolution map of mouse hematopoietic stem and progenitor cell differentiation. *Blood*, **128**, e20–e31.
